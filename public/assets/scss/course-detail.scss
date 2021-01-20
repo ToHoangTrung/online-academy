@@ -1,0 +1,606 @@
+$marginPercent: 7%;
+$leftSideWidthPercent: 60%;
+.course-detail {
+  position: relative;
+  display: flex;
+  button{
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  .wrapper {
+    flex: 1;
+
+    .basic-info-wrapper {
+      background-color: #212932;
+      padding-bottom: 25px;
+      width: 100vw;
+      margin: 0px auto;
+
+      img {
+        width: 100%;
+        height: 350px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        object-fit: cover;
+      }
+
+      .basic-info {
+        max-width: 1800px;
+        margin-left: 7%;
+        color: white;
+        width: 60%;
+
+        i {
+          color: white;
+          font-size: 14px;
+          margin: auto 5px auto 10px;
+        }
+
+        .name {
+          font-size: 35px;
+          font-weight: bold;
+          line-height: 40px;
+        }
+
+        #instructorLink {
+          color: #64b8ac;
+        }
+
+        ul {
+          display: flex;
+          align-items: center;
+          margin: 20px auto;
+
+          &:first-child {
+            color: #8ed1dc;
+            font-weight: bold;
+            margin-top: 0px;
+          }
+
+          li {
+            display: inline;
+            margin: auto 5px;
+
+            &:first-child {
+              margin-left: 0px;
+            }
+          }
+        }
+
+        p {
+          margin: 10px 0px;
+        }
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+        }
+
+        .headline {
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .more {
+          background-color: transparent;
+          border: 1px solid white;
+          color: white;
+          padding: 15px 10px;
+          margin-right: 10px;
+          margin-top: 10px;
+          font-weight: 500;
+          font-size: 16px;
+        }
+
+        .rating {
+          color: yellow;
+
+          i {
+            color: yellow;
+            font-size: 10px;
+            margin-right: -5px;
+          }
+        }
+
+        .best-seller-btn {
+          background-color: orange;
+          border: none;
+          padding: 5px;
+        }
+      }
+    }
+
+    .course-content-wrapper {
+      margin-left: $marginPercent;
+      margin-top: 20px;
+      width: $leftSideWidthPercent;
+
+      .course-content {
+        border-radius: 5px;
+        border: 1px solid #DCDACB;
+
+        .chapter {
+          &:first-child .header {
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+
+          //&:last-child .header{
+          //  border-bottom-right-radius: 10px;
+          //  border-bottom-left-radius: 10px;
+          //}
+
+          .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #FBFBF8;
+            border-bottom: 1px solid #DCDACB;
+
+            &:last-child {
+              border: none;
+            }
+
+            .title {
+              i {
+                padding: 15px
+              }
+
+              span:last-child {
+
+              }
+            }
+
+            .time {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-right: 20px;
+
+              i {
+                font-size: 5px;
+                padding: 5px
+              }
+            }
+
+          }
+
+          .chapter-content {
+            margin: 0 10px;
+
+            .section {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              .title {
+                display: flex;
+                align-items: center;
+
+                span {
+                  color: #0F7C9E;
+                }
+
+                i {
+                  font-size: 15px;
+                  padding: 10px;
+                  color: #25a55e;
+                }
+              }
+
+              .time {
+                margin-right: 10px;
+              }
+
+            }
+          }
+        }
+      }
+    }
+    .course-description-wrapper {
+      margin-left: $marginPercent;
+      margin-top: 20px;
+      width: $leftSideWidthPercent;
+    }
+    .frequently-bought-wrapper {
+      margin-left: $marginPercent;
+      margin-top: 20px;
+      width: $leftSideWidthPercent;
+
+      .frequently-bought {
+        margin-left: 20px;
+        width: 100%;
+
+        .course {
+          display: grid;
+          grid-template-columns: 15% 50% 10% 10% 10% 5%;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 0;
+          border-bottom: 1px solid rgba(196, 189, 189, 0.7);
+
+          img {
+            width: 100px;
+            height: 60px;
+          }
+
+          .info {
+            h2 {
+              font-size: 18px;
+            }
+
+            .other-info {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+
+              button {
+                background-color: orange;
+                border: none;
+                padding: 5px;
+                border-radius: 5px;
+                font-weight: bold;
+                margin-right: 10px;
+              }
+
+              i {
+                font-size: 5px;
+                align-self: center;
+              }
+
+              span {
+                &:first-child {
+                  color: #2D8643;
+                }
+
+                &:last-child {
+                  color: #949494;
+                  font-weight: 100;
+                }
+
+              }
+            }
+          }
+
+          .rating {
+            justify-self: center;
+            span {
+
+            }
+
+            i {
+              color: #ffbf00;
+            }
+          }
+
+          .wish {
+            border-radius: 50%;
+            background-color: red;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i {
+              color: white;
+              margin: 0 auto;
+              font-size: 20px;
+            }
+          }
+
+        }
+      }
+    }
+
+    .instructor-info-wrapper {
+      margin-left: $marginPercent;
+      margin-top: 20px;
+      width: $leftSideWidthPercent;
+
+      .instructor-info {
+        margin-left: 20px;
+
+        .info {
+          margin: 10px 0;
+
+          .name {
+            color: #0F7C90;
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+
+          .short-description {
+            color: #b1afaf;
+          }
+
+          .review-info {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+
+            img {
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+              margin-right: 40px;
+            }
+
+            .detail-info-area {
+              padding: 10px;
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: space-between;
+
+              .detail {
+                display: flex;
+                justify-content: space-between;
+
+                .icon {
+                  width: 10px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin-right: 20px;
+
+                  i {
+                    margin: auto;
+                    color: orange;
+                  }
+                }
+
+                span {
+                  flex: 1;
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+    .student-feedback-wrapper {
+      margin-left: $marginPercent;
+      margin-top: 20px;
+      width: $leftSideWidthPercent;
+
+      .student-feedback {
+        margin-left: 20px;
+
+        .rating-area {
+          display: flex;
+          align-items: center;
+
+          .number-area {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .number {
+              font-size: 40px;
+              font-weight: 100;
+            }
+
+            .rating {
+              margin: 10px 0;
+            }
+
+            i {
+              color: orange;
+            }
+
+            .total {
+              i {
+                color: black;
+              }
+            }
+
+          }
+
+          .processes {
+            width: 450px;
+
+            .process {
+              display: flex;
+              align-items: center;
+              margin: 10px 0;
+
+              span {
+                margin-right: 10px;
+              }
+
+              .bar {
+                height: 15px;
+                background-color: darkorange;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .review-wrapper {
+      margin-left: $marginPercent;
+      margin-top: 20px;
+      width: $leftSideWidthPercent;
+
+      .reviews {
+        margin-left: 20px;
+        .search-area {
+          form {
+              input {
+                outline: none;
+                border: 1px solid gray;
+                border-radius: 3px;
+                padding: 10px;
+              }
+          }
+        }
+        .review {
+          padding: 20px 0;
+          display: flex;
+          align-items: flex-start;
+          border-bottom: 1px solid gray;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 20px;
+          }
+
+          .main {
+            flex: 1;
+            .name {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+
+              h2 {
+                font-size: 20px;
+              }
+
+              .like-dislike {
+                i {
+                  padding: 5px;
+                  color: gray;
+                }
+              }
+            }
+
+            .rating {
+              display: flex;
+              justify-content: flex-start;
+              margin: 10px 0;
+
+              //.stars {
+              //  margin-right: 20px;
+              //
+              //  i {
+              //    color: orange;
+              //  }
+              //}
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .buy-info {
+    position: fixed;
+    top: 80px;
+    right: 7%;
+    width: 300px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+
+    img {
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      margin-bottom: 10px;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    i {
+      color: grey;
+      margin-right: 10px;
+    }
+
+    div {
+      padding: 20px 20px 10px 20px;
+    }
+
+    ul {
+      flex-direction: column;
+      margin-left: 15px;
+
+      li {
+        list-style: none;
+        margin: 5px 0px;
+      }
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .add-to-cart {
+      background-color: #EC5252;
+      color: white;
+      border-radius: 5px;
+      &:hover{
+        filter: brightness(90%);
+      }
+    }
+
+    .buy-now {
+      background-color: white;
+      color: green;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+
+    .guarantee {
+      font-size: 13px;
+      text-align: center;
+      margin: 10px auto;
+    }
+
+    .include {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 30px 0px 10px 0px;
+    }
+
+    form {
+      margin: 15px 0px 20px 0px;
+      display: flex;
+
+      input[type="text"] {
+        outline: none;
+        flex: 1;
+        padding: 10px;
+        border: 2px solid grey;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+        &:focus {
+          border: 2px solid #103d5f;
+        }
+      }
+
+      input[type="submit"] {
+        width: 70px;
+        padding: 10px;
+        color: white;
+        background-color: #0F7C90;
+        border: 1px solid grey;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+  }
+}

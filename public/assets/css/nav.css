@@ -1,0 +1,373 @@
+nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: 15% 55% 30%;
+  align-items: center;
+  justify-content: flex-start;
+  background: #333d49; }
+  nav .left-sight {
+    justify-self: stretch; }
+    nav .left-sight img {
+      width: 80%; }
+  nav a {
+    text-decoration: none;
+    color: black; }
+  nav .center {
+    width: 100%;
+    background-color: #48515c;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px; }
+    nav .center i {
+      padding: 10px;
+      color: rgba(255, 255, 255, 0.5); }
+    nav .center form {
+      width: 100%; }
+      nav .center form input {
+        width: 100%;
+        background-color: #48515c;
+        outline: none;
+        border: none;
+        margin: auto;
+        height: 40px;
+        color: white;
+        border-radius: 5px; }
+        nav .center form input::placeholder {
+          color: rgba(255, 255, 255, 0.5); }
+  nav .right-sight {
+    justify-self: end;
+    margin-right: 30px;
+    display: flex;
+    align-items: center; }
+    nav .right-sight hr {
+      margin: 15px -16px;
+      background-color: whitesmoke;
+      border: 1px solid whitesmoke; }
+    nav .right-sight .nav-link {
+      display: inline;
+      color: white;
+      text-decoration: none;
+      padding: 20px; }
+    nav .right-sight .before-sign-in {
+      display: flex;
+      align-items: center; }
+      nav .right-sight .before-sign-in a:nth-child(3) {
+        padding: 10px 25px;
+        border-radius: 5px;
+        margin-left: 10px;
+        background-color: #333d49;
+        color: white;
+        border: 1px solid white; }
+      nav .right-sight .before-sign-in a:nth-child(4) {
+        padding: 10px 25px;
+        border-radius: 5px;
+        margin-left: 10px;
+        background-color: #48515c;
+        color: white;
+        border: 1px solid white; }
+      nav .right-sight .before-sign-in a:hover {
+        filter: brightness(90%); }
+      nav .right-sight .before-sign-in .my-teach {
+        position: relative; }
+        nav .right-sight .before-sign-in .my-teach .my-teach-content {
+          display: none;
+          position: absolute;
+          z-index: 1;
+          padding: 15px;
+          border: 1px solid whitesmoke;
+          box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+          width: 300px;
+          right: 0;
+          top: 38px;
+          background-color: #EEF1F2; }
+          nav .right-sight .before-sign-in .my-teach .my-teach-content p {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px; }
+          nav .right-sight .before-sign-in .my-teach .my-teach-content a {
+            background: #F92C71;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            border: 1px solid black;
+            padding: 10px auto;
+            margin: auto;
+            display: block;
+            font-size: 20px;
+            font-weight: bold; }
+        nav .right-sight .before-sign-in .my-teach:hover .my-teach-content {
+          display: block; }
+    nav .right-sight .after-sign-in {
+      display: flex;
+      align-items: center; }
+      nav .right-sight .after-sign-in i {
+        font-size: 17px; }
+      nav .right-sight .after-sign-in .my-learning {
+        position: relative; }
+        nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content {
+          display: none;
+          position: absolute;
+          z-index: 1;
+          padding: 15px;
+          border: 1px solid whitesmoke;
+          box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+          width: 300px;
+          right: 0;
+          top: 38px;
+          background-color: #EEF1F2; }
+          nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .my-course-item {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            grid-column-gap: 10px;
+            align-items: center;
+            line-height: 20px; }
+            nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .my-course-item img {
+              width: 95%;
+              grid-row: 1 / 3; }
+            nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .my-course-item p:nth-child(2) {
+              font-weight: bold;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              -webkit-line-clamp: 3; }
+            nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .my-course-item p:nth-child(3) {
+              color: green;
+              font-weight: bold; }
+          nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .content-btn {
+            background: #F92C71;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            border: 1px solid black;
+            padding: 10px auto;
+            margin: auto;
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px; }
+          nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .my-empty-course p {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px; }
+          nav .right-sight .after-sign-in .my-learning .my-learning-dropdown-content .my-empty-course a {
+            background: #F92C71;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            border: 1px solid black;
+            padding: 10px auto;
+            margin: auto;
+            display: block;
+            font-size: 20px;
+            font-weight: bold; }
+        nav .right-sight .after-sign-in .my-learning:hover .my-learning-dropdown-content {
+          display: block; }
+      nav .right-sight .after-sign-in .my-cart {
+        position: relative; }
+        nav .right-sight .after-sign-in .my-cart .amount-in-cart {
+          color: white;
+          background-color: #ec5252;
+          width: 20px;
+          line-height: 20px;
+          border-radius: 50%;
+          text-align: center;
+          position: absolute;
+          top: -10px;
+          right: 3px; }
+        nav .right-sight .after-sign-in .my-cart .my-cart-content {
+          display: none;
+          position: absolute;
+          z-index: 1;
+          padding: 15px;
+          border: 1px solid whitesmoke;
+          box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+          width: 300px;
+          right: 0;
+          top: 38px;
+          background-color: #EEF1F2; }
+          nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-item {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            align-items: center;
+            line-height: 20px; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-item img {
+              width: 90%;
+              grid-row: 1 / 4; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-item p:nth-child(2) {
+              font-weight: bold;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-item p:nth-child(3) {
+              font-size: 14px; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-item p:last-child span:first-child {
+              font-weight: bold; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-item p:last-child span:last-child {
+              text-decoration: line-through;
+              color: grey; }
+          nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-sum p span {
+            font-size: 20px; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-sum p span:first-child {
+              font-weight: bold; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-sum p span:last-child {
+              text-decoration: line-through;
+              color: grey; }
+          nav .right-sight .after-sign-in .my-cart .my-cart-content .my-cart-sum a {
+            background: #F92C71;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            border: 1px solid black;
+            padding: 10px auto;
+            margin: auto;
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px; }
+          nav .right-sight .after-sign-in .my-cart .my-cart-content .my-empty-cart {
+            text-align: center;
+            font-size: 16px;
+            line-height: 40px; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-empty-cart p {
+              text-align: center; }
+            nav .right-sight .after-sign-in .my-cart .my-cart-content .my-empty-cart a {
+              color: red;
+              font-weight: bold; }
+        nav .right-sight .after-sign-in .my-cart:hover .my-cart-content {
+          display: block; }
+      nav .right-sight .after-sign-in .my-notification {
+        position: relative; }
+        nav .right-sight .after-sign-in .my-notification .amount-of-notification {
+          color: white;
+          background-color: #ec5252;
+          width: 20px;
+          line-height: 20px;
+          border-radius: 50%;
+          text-align: center;
+          position: absolute;
+          position: absolute;
+          top: -10px;
+          right: 7px; }
+        nav .right-sight .after-sign-in .my-notification .my-notification-content {
+          display: none;
+          position: absolute;
+          z-index: 1;
+          padding: 15px;
+          border: 1px solid whitesmoke;
+          box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+          width: 300px;
+          right: 0;
+          top: 38px;
+          background-color: #EEF1F2;
+          width: 350px; }
+          nav .right-sight .after-sign-in .my-notification .my-notification-content .my-introduce-notification {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            align-items: center; }
+            nav .right-sight .after-sign-in .my-notification .my-notification-content .my-introduce-notification span {
+              font-size: 22px;
+              font-weight: bold; }
+            nav .right-sight .after-sign-in .my-notification .my-notification-content .my-introduce-notification a {
+              font-size: 18px;
+              padding: 0px;
+              font-weight: bold;
+              text-align: right;
+              color: green; }
+            nav .right-sight .after-sign-in .my-notification .my-notification-content .my-introduce-notification button {
+              color: grey;
+              width: 100%;
+              padding: 15px;
+              margin-top: 15px;
+              border: none;
+              background-color: white;
+              border-bottom: 1px solid grey;
+              outline: none;
+              cursor: pointer;
+              font-size: 16px;
+              font-weight: bold; }
+          nav .right-sight .after-sign-in .my-notification .my-notification-content .my-empty-notification p {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 15px; }
+        nav .right-sight .after-sign-in .my-notification:hover .my-notification-content {
+          display: block; }
+      nav .right-sight .after-sign-in .my-profile {
+        position: relative; }
+        nav .right-sight .after-sign-in .my-profile .my-profile-content {
+          display: none;
+          position: absolute;
+          z-index: 1;
+          padding: 15px;
+          border: 1px solid whitesmoke;
+          box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+          width: 300px;
+          right: 0;
+          top: 38px;
+          background-color: #EEF1F2; }
+          nav .right-sight .after-sign-in .my-profile .my-profile-content .user-logo {
+            padding: 10px;
+            border-radius: 3px;
+            justify-content: space-between;
+            display: flex;
+            align-items: center; }
+            nav .right-sight .after-sign-in .my-profile .my-profile-content .user-logo img {
+              width: 70px;
+              height: 70px;
+              border-radius: 50%; }
+            nav .right-sight .after-sign-in .my-profile .my-profile-content .user-logo .text span {
+              color: #dd5050;
+              font-size: 18px;
+              font-weight: bold; }
+            nav .right-sight .after-sign-in .my-profile .my-profile-content .user-logo .text p {
+              font-size: 16px;
+              font-weight: 300; }
+            nav .right-sight .after-sign-in .my-profile .my-profile-content .user-logo:hover {
+              filter: brightness(90%);
+              background-color: #e0e0e0; }
+          nav .right-sight .after-sign-in .my-profile .my-profile-content a {
+            color: black;
+            padding: 5px; }
+            nav .right-sight .after-sign-in .my-profile .my-profile-content a:hover {
+              color: blueviolet; }
+          nav .right-sight .after-sign-in .my-profile .my-profile-content div {
+            display: flex;
+            flex-direction: column;
+            line-height: 20px; }
+            nav .right-sight .after-sign-in .my-profile .my-profile-content div:first-child {
+              display: grid;
+              grid-template-columns: 30% 70%;
+              align-items: center;
+              justify-self: start;
+              padding: auto; }
+              nav .right-sight .after-sign-in .my-profile .my-profile-content div:first-child p:first-child {
+                color: white;
+                width: 70px;
+                line-height: 70px;
+                border-radius: 50%;
+                text-align: center;
+                background-color: red;
+                grid-row: 1/3;
+                font-size: 26px;
+                font-weight: bold; }
+              nav .right-sight .after-sign-in .my-profile .my-profile-content div:first-child p:nth-child(2) {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: -10px; }
+                nav .right-sight .after-sign-in .my-profile .my-profile-content div:first-child p:nth-child(2):hover {
+                  color: blue; }
+              nav .right-sight .after-sign-in .my-profile .my-profile-content div:first-child p:nth-child(3) {
+                font-size: 14px;
+                margin-top: -10px; }
+        nav .right-sight .after-sign-in .my-profile:hover .my-profile-content {
+          display: block; }

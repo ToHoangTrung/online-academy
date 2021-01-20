@@ -1,0 +1,213 @@
+.payment{
+    flex: 1;
+    position: relative;
+    width: 80%;
+    margin: 20px auto;
+    a{
+      display: block;
+      color: black;
+      text-decoration: none;
+    }
+    .un-payment{
+        display: grid;
+        grid-template-columns: 60% 38%;
+        justify-content: space-between;
+        align-items: flex-start;
+        .payment-headline{
+            margin-top: -20px;
+            grid-column: 1 / 3;
+            font-size: 30px;
+            background-color: #48515C;
+            width: 100vw;
+            margin-left: -10vw;
+            padding: 40px 13.5% 40px 12.5%;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .payment-type{
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            .payment-type-content{
+                display: flex;
+                flex-direction: column;
+                width: 98%;
+                margin: 0px auto;
+                .payment-type-item{
+                    display: flex;
+                    //border: 1px solid black;
+                    justify-content: flex-start;
+                    padding: 20px 0px;
+                    align-items: center;
+                    border-bottom: 1px solid #CCCCCC;
+                    input{ 
+                        border: 1px solid black;
+                        transform: scale(2); 
+                        margin-left: 15px;
+                        cursor: pointer;
+                        &:hover{
+                            filter: brightness(80%);
+                        }
+                    }
+                    img{
+                        //border: 1px solid black;
+                        margin: 0px 20px;
+                        height: 60px;
+                        width: 60px;
+                    }
+                    div{
+                        align-self: flex-start;
+                        p{
+                            line-height: 22px;
+                            font-size: 14px;
+                            &:first-child{
+                                font-weight: bold;
+                                font-size: 17px;
+                            }
+                                
+                        }
+                    }
+                }
+            }
+            .payment-btn{
+                cursor: pointer;
+                outline: none;
+                background-color: #F26C4F;
+                color: white;
+                display: block;
+                margin: 10px auto;
+                width: 98%;
+                padding: 15px;
+                font-size: 17px;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                &:hover{
+                    filter: brightness(110%);
+                }
+            }
+        }
+        .price-summary{
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            padding: 0px 10px;
+            .summary{
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid #CCCCCC;
+                padding: 10px 0px;
+                p{
+                    &:first-child{
+                        font-weight: bold;
+                    }
+                }
+            }
+            .num-course{
+                a{
+                    color: #428BCA;
+                    i{
+                        margin-right: 5px;
+                    }
+                }
+            }
+            .course-list{
+                display: flex;
+                flex-direction: column;
+                padding: 10px 0px;
+                border-bottom: 1px solid #CCCCCC;
+                .course-list-item{
+                    display: grid;
+                    grid-template-columns: 20% 60% 20%;
+                    justify-content: space-between;
+                    //border: 1px solid black;
+                    padding: 5px 0px;
+                    align-items: flex-start;
+                    transition: 0.3s;
+                    height: 60px;
+                    cursor: pointer;
+                    img{
+                        width: 90%;
+                        height: 100%;
+                        border-radius: 5px;
+                    }
+                    .course-name{
+                        font-weight: bold;
+                        text-align: left;
+                    }
+                    div{
+                        p{
+                            text-align: right;
+                            &:first-child{
+                                font-weight: bold;
+                            }
+                            &:last-child{
+                                text-decoration: line-through;
+                                color: #CCCCCC;
+                            }
+                        }
+                    }
+                }
+            }
+            .bonus-coupon{
+                p{
+                    font-weight: bold;
+                }
+            }
+            .total-price{
+                border-bottom: none;
+                p{
+                    font-size: 25px;
+                    padding: 15px 0px;
+                    font-weight: bold;
+    
+                    &:last-child{
+                        color: #FF0000;
+                    }
+                }
+            }
+        }
+    }
+    .payment-result{
+        background-color: white;
+        border-radius: 5px;
+        width: 70%;
+        margin: 0px auto;
+        .template{
+            display: none;
+            img{
+                width: 100%;
+            }
+            .result-text{
+                font-size: 20px;
+                padding: 15px;
+                text-align: center;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                color: #333D49;
+                font-weight: bold;
+            }
+            button{
+                cursor: pointer;
+                outline: none;
+                background-color: #F26C4F;
+                color: white;
+                display: block;
+                //margin: 10px auto;
+                width: 98%;
+                padding: 15px;
+                font-size: 17px;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                &:hover{
+                    filter: brightness(110%);
+                }
+            }
+        }
+        .payment-fail{
+            button{
+                color: red;
+            }
+        }
+    }
+}

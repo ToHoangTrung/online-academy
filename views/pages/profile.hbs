@@ -1,0 +1,126 @@
+<div class="profile">
+	<div class="container">
+		<div class="info">
+			<h2>Profile</h2>
+			<form action="/user/update-basic-info" method="post">
+				<div class="form-control">
+					<label for="">Username</label>
+					<input type="text" name="username" value="{{user.username}}" readonly>
+				</div>
+				<div class="name row">
+					<div class="form-control">
+						<label for="">Firstname</label>
+						<input type="text" name="firstName" value="{{user.firstName}}">
+					</div>
+					<div class="form-control">
+						<label for="">Lastname</label>
+						<input type="text" name="lastName" value="{{user.lastName}}">
+					</div>
+				</div>
+				<div class="form-control row">
+					<label for="">Email</label>
+					<input type="text" name="email" value="{{user.email}}">
+				</div>
+
+				<div class="form-control row">
+					<label for="">Bio</label>
+					<textarea></textarea>
+				</div>
+
+				<div class="form-control">
+					<input type="submit" value="Save">
+				</div>
+			</form>
+			<h2>Security</h2>
+			<form id="passwordForm" action="/user/update-password" method="post" class="security">
+				<div class="form-control row">
+					<label for="">Old password</label>
+					<input type="password" name="oldPassword">
+				</div>
+				<div class="form-control row">
+					<label for="">New password</label>
+					<input type="password" name="newPassword">
+				</div>
+				<div class="form-control row">
+					<label for="">Confirm password</label>
+					<input type="password" name="confirmPassword">
+				</div>
+				<div class="form-control">
+					<input type="submit" value="Update">
+				</div>
+			</form>
+		</div>
+		<div class="avatar">
+			<h2>Avatar</h2>
+			<div class="img">
+				<form action="/user/update-avatar" method="post" enctype="multipart/form-data">
+					<div class="form-control inputLabel">
+						<label for="avatarInput"><img src="../../{{user.image}}" alt="avatar" id="userAvatar"></label>
+						<input type="file" name="avatar" id="avatarInput" style="display: none"
+						       onchange="readURL(this);"
+						       accept="image/x-png,image/gif,image/jpeg"/>
+						<script>
+							function readURL(input) {
+								if (input.files && input.files[0]) {
+									const reader = new FileReader();
+									reader.onload = function (e) {
+										$('#userAvatar')
+												.attr('src', e.target.result)
+												.width(250)
+												.height(250);
+									};
+
+									reader.readAsDataURL(input.files[0]);
+								}
+							}
+						</script>
+					</div>
+					<div class="form-control">
+						<input type="submit" value="Save">
+					</div>
+				</form>
+				<!--				<span><i class="fas fa-cog"></i> Change your photo</span>-->
+			</div>
+		</div>
+	</div>
+	<!--	check status and message -->
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<!--	password formm-->
+	<script>
+		function validatePassword() {
+			if (passwordForm.newPassword.value.length < 8) {
+				return "Password must have at least 8 characters";
+			}
+			if (passwordForm.newPassword.value != passwordForm.confirmPassword.value) {
+				return 'Password does not match'
+			}
+			return ''
+		}
+
+		$('#passwordForm').on('submit', (e) => {
+			e.preventDefault();
+			const validateSignUpMessage = validatePassword();
+			if (validateSignUpMessage) {
+				Swal.fire({
+					icon: 'error',
+					title: 'Invalid input data',
+					text: validateSignUpMessage
+				})
+				return;
+			}
+			$('#passwordForm').off('submit').submit();
+		});
+	</script>
+	<script>
+		const status = "{{status}}"
+		const message = "{{message}}"
+		if (status && message) {
+			Swal.fire({
+				icon: status,
+				title: status === 'error' ? 'Error has occurred!' : 'Successfully!',
+				text: message
+			})
+		}
+	</script>
+</div>

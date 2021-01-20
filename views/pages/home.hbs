@@ -1,0 +1,341 @@
+<div class="main">
+	<div class="category normal">
+		<div class="category-content" id="category-content">
+			<div class="category-item">
+				<a href="#"><i class="fab fa-buffer"></i>Category</a>
+			</div>
+			{{#each this.categories}}
+				<div class="category-item">
+					<a href={{this.id}} class="category-link"><i class="{{this.logo}}"></i>{{this.name}}</a>
+					<div class="sub-category-content" id="sub-category-content">
+						{{#each this.subCategories}}
+							<a href="#" class="sub-category-link"><i
+									class="fas fa-long-arrow-alt-right"></i>{{this.name}}</a>
+						{{/each}}
+					</div>
+				</div>
+			{{/each}}
+			<script>
+				$('.category .category-link').map(function (index) {
+					var seoCategoryLink = $(this).text().toLowerCase().replace(/\ /g, '-');
+					var categoryId = $(this).attr('href');
+					var params = new URLSearchParams({
+						id: $(this).attr('href'),
+					});
+					$(this).attr('href', '/collection/' + seoCategoryLink + '/?' + params);
+					$('.category .sub-category-content:eq(' + index + ')' + ' .sub-category-link').map(function () {
+						var seoSubCategoryLink = $(this).text().toLowerCase().replace(/\ /g, '-');
+						var params = new URLSearchParams({
+							id: categoryId,
+							topic: seoSubCategoryLink
+						});
+						$(this).attr('href', '/collection/' + seoCategoryLink + '/?' + params);
+					})
+				});
+			</script>
+		</div>
+		<div class="slide-show">
+			<div class="wrap">
+				<button type="button" class="slick-btn prev"><i class="fas fa-chevron-left"></i></button>
+				<div class="slide-show-content">
+					<img src="https://unica.vn/upload/images/032140_top-khoa-hoc-nhung-ky-nang-hay-nhat_thumb.png"
+					     idx='0' alt="">
+					<img src="https://unica.vn/upload/images/093410_banh-quy-va-mut-tet_thumb.png" idx='1' alt="">
+					<img src="https://media-kyna.cdn.vccloud.vn/uploads/banners/985/img/image_url-1607485822.jpg"
+					     idx='2' alt="">
+					<img src="https://media-kyna.cdn.vccloud.vn/uploads/banners/995/img/image_url-1606374038.jpg"
+					     idx='3' alt="">
+				</div>
+				<button type="button" class="slick-btn next"><i class="fas fa-chevron-right"></i></button>
+			</div>
+			<div class="change-dot">
+				<button class="slide-dot" style="background-color: white;" idx='0'><i class="far fa-circle"></i>
+				</button>
+				<button class="slide-dot" idx='1'><i class="far fa-circle"></i></button>
+				<button class="slide-dot" idx='2'><i class="far fa-circle"></i></button>
+				<button class="slide-dot" idx='3'><i class="far fa-circle"></i></button>
+			</div>
+			<script>
+				var stt = 0;
+				var endImg = $(".slide-show-content img:last").attr("idx");
+				$(".slide-dot").click(function () {
+					stt = $(this).attr("idx");
+					changeImg(stt);
+				});
+				$(".slide-show .next").click(function () {
+					if (++stt > endImg) {
+						stt = 0;
+					}
+					changeImg(stt);
+				});
+				$(".slide-show .prev").click(function () {
+					if (--stt < 0) {
+						stt = endImg;
+					}
+					changeImg(stt);
+				});
+				var interval;
+				var timer = function () {
+					interval = setInterval(function () {
+						$(".slide-show .next").click();
+					}, 5000);
+				};
+				timer();
+
+				function changeImg(stt) {
+					$(".slide-show-content img").hide();
+					$(".slide-show-content img").eq(stt).fadeIn(500);
+					$(".slide-dot").css('background-color', 'transparent');
+					$(".slide-dot").eq(stt).css('background-color', 'white');
+					clearInterval(interval);
+					timer();
+				};
+			</script>
+		</div>
+	</div>
+	<div class="topic-recommend background-change second">
+		<p>Topics recommended for you</p>
+		<div class="topic-recommend-content">
+			{{#each this.topEnrollCategories}}
+				<a href={{this.category.id}} class="topic-recommend-link">
+					<div>{{this.subName}}</div>
+				</a>
+				<p style="display: none">{{this.category.name}}</p>
+			{{/each}}
+			<script>
+				$('.topic-recommend-link').map(function () {
+					var seoSubCategoryLink = $(this).text().toLowerCase().replace(/\ /g, '-');
+					var seoCategoryLink = $(this).next().text().toLowerCase().replace(/\ /g, '-');
+					var params = new URLSearchParams({
+						id: $(this).attr('href'),
+						topic: seoSubCategoryLink
+					});
+					$(this).attr('href', '/collection/' + seoCategoryLink + '/?' + params);
+				});
+			</script>
+		</div>
+	</div>
+	<div class="special-course background-change thirth">
+		<p class="headline-content" style="color:#A92107">Top Courses In Week</p>
+		<div class="special-course-content">
+			<a href="" class="content-logo"><div class="course-item">
+				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtyghwvH5glO_OQGAkr0F6516Wd35lOGQyCQ&usqp=CAU" alt="">
+			</div></a>
+			{{#each this.topCoursesInWeek}}
+				<a href={{this.id}}><div class="course-item">
+					<img class="course-img" src={{this.image}} alt={{this.name}}>
+					<p class="c-name">{{this.name}}</p>
+					<p><span>{{this.instructor.basicInfo.Name}} {{this.instructor.basicInfo.lastName}}</span></p>
+					<p><span>{{this.rating}}</span><span class="star-rating"></span><span>({{this.numReview}})</span></p>
+					<p><span>$ {{this.price}}</span><span>$ {{this.prePrice}}</span></p>
+					<p><span class="advancement">{{this.advancement.description}}</span></p>
+					<script>
+						$(".star-rating").starRating({
+							initialRating: {{this.rating}},
+							strokeColor: '#EB8A2F',
+							strokeWidth: 10,
+							starSize: 15,
+							readOnly: true
+						});
+					</script>
+				</div></a>
+			{{/each}}
+		</div>
+	</div>
+	<div class="special-course normal">
+		<p class="headline-content" style="color:#7ED957">Newest Courses</p>
+		<div class="special-course-content">
+			{{#each this.newestCourses}}
+				<a href={{this.id}}>
+					<div class="course-item">
+						<img class="course-img" src={{this.image}} alt={{this.name}}>
+						<p class="c-name">{{this.name}}</p>
+						<p><span>{{this.instructor.basicInfo.Name}} {{this.instructor.basicInfo.lastName}}</span>
+						</p>
+						<p><span>{{this.rating}}</span><span class="star-rating"></span><span>({{this.numReview}}
+							)</span></p>
+						<p><span>$ {{this.price}}</span><span>$ {{this.prePrice}}</span></p>
+						<p><span class="advancement">{{this.advancement.description}}</span></p>
+						<script>
+							$(".star-rating").starRating({
+								initialRating: {{this.rating}},
+								strokeColor: '#EB8A2F',
+								strokeWidth: 10,
+								starSize: 15,
+								readOnly: true
+							});
+						</script>
+					</div>
+				</a>
+			{{/each}}
+		</div>
+	</div>
+	<div class="special-course background-change second">
+		<p class="headline-content" style="color: #45D7FF">Most Enroll Courses</p>
+		<div class="special-course-content">
+			{{#each this.mostEnrollCourses}}
+				<a href={{this.id}}>
+					<div class="course-item">
+						<img class="course-img" src={{this.image}} alt={{this.name}}>
+						<p class="c-name">{{this.name}}</p>
+						<p><span>{{this.instructor.basicInfo.Name}} {{this.instructor.basicInfo.lastName}}</span>
+						</p>
+						<p><span>{{this.rating}}</span><span class="star-rating"></span><span>({{this.numReview}}
+							)</span></p>
+						<p><span>$ {{this.price}}</span><span>$ {{this.prePrice}}</span></p>
+						<p><span class="advancement">{{this.advancement.description}}</span></p>
+						<script>
+							$(".star-rating").starRating({
+								initialRating: {{this.rating}},
+								strokeColor: '#EB8A2F',
+								strokeWidth: 10,
+								starSize: 15,
+								readOnly: true
+							});
+						</script>
+					</div>
+				</a>
+			{{/each}}
+		</div>
+	</div>
+	<div class="personal-recommend background-change">
+		<p>Get personal learning recommendations</p>
+		<p>Answer a few questions for your top picks</p>
+		<button type="button">Get Started</button>
+	</div>
+	<div class="introduce-category normal">
+		<p>Haven't found the course you're interested in?<br/>Data World has more than 2,000 courses waiting for you to
+			explore</p>
+		<div class="introduce-category-content">
+			{{#each this.categories}}
+				<a href={{this.id}} class="introduce-category-link">
+					<div>
+						<img src={{this.image}} alt="">
+						<p>{{this.name}}</p>
+					</div>
+				</a>
+			{{/each}}
+			<script>
+				$('.introduce-category-link').map(function () {
+					var seoCategoryLink = $(this).text().toLowerCase().replace(/\ /g, '-');
+					var params = new URLSearchParams({
+						id: $(this).attr('href')
+					});
+					$(this).attr('href', '/collection/' + seoCategoryLink + '/?' + params);
+				});
+			</script>
+		</div>
+	</div>
+	<div class="why-should-learn background-change second">
+		<p>3 REASONS YOU SHOULD LEARN ONLINE AT DATA WORLD</p>
+		<div class="why-should-learn-content">
+			<a href="#" class="why-should-learn-item">
+				<div>
+					<img src='https://unica.vn/media/images/icon-ts-1.png' alt="">
+					<p>Reputable Instructor</p>
+					<p>Quality lectures</p>
+				</div>
+			</a>
+			<a href="#" class="why-should-learn-item">
+				<div>
+					<img src='https://unica.vn/media/images/icon-ts-2.png' alt="">
+					<p>Payment only 1 time</p>
+					<p>Learning forever</p>
+				</div>
+			</a>
+			<a href="#" class="why-should-learn-item">
+				<div>
+					<img src='https://unica.vn/media/images/icon-ts-3.png' alt="">
+					<p>Online Learning</p>
+					<p>Direct support</p>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="popular-instructor background-change thirth">
+		<p>POPULAR INSTRUCTOR</p>
+		<div class="wrap">
+			<button type="button" class="slick-btn prev"><i class="fas fa-chevron-left"></i></button>
+			<div class="popular-instructor-content">
+				{{#each this.instructors}}
+					<a href="#" class="popular-instructor-item">
+						<div>
+							<img src={{this.image}} alt="">
+							<p>{{this.firstName}} {{this.lastName}}</p>
+							<p>{{this.job}}</p>
+						</div>
+					</a>
+				{{/each}}
+			</div>
+			<button type="button" class="slick-btn next"><i class="fas fa-chevron-right"></i></button>
+		</div>
+	</div>
+	<div class="cooperate-tranning normal">
+		<p>COOPERATE WITH DATA WORLD TRANNING</p>
+		<div class="cooperate-tranning-content">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/vietnamworks_logo.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/enterprise.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-1.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-2.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-3.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-4.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-5.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-6.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-7.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-8.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-9.png" alt="">
+			<img src="https://media-kyna.cdn.vccloud.vn/new-homepage/img/logo-10.png" alt="">
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('.prev').click(function () {
+				$(this).next().slick('slickPrev');
+			});
+
+			$('.next').click(function () {
+				$(this).prev().slick('slickNext');
+			});
+
+			$('.popular-instructor-content').slick({
+				dots: false,
+				slidesToShow: 4,
+				slidesToScroll: 1,
+				touchMove: false,
+			});
+
+			var categoryHeight = 0;
+			$('.category .category-item').map(function (index) {
+				if (index == 0) categoryHeight += 0;
+				else categoryHeight += $(this).height();
+			})
+			$('.sub-category-content').height(categoryHeight);
+
+			localStorage.setItem('categoryHeight', categoryHeight);
+			
+			$('.advancement').map(function (index, value) {
+				var advancementVal = value.innerHTML;
+				if (advancementVal == "BestSeller") {
+					$(this).css("background-color", "#FFE799");
+				} else if (advancementVal == "Hot &amp; New") {
+					$(this).css("background-color", "#FF9999");
+				} else if (advancementVal == "Highest Rated") {
+					$(this).css("background-color", "#FFC48C");
+				} else if (advancementVal == "New") {
+					$(this).css("background-color", "#99DBAA");
+				} else if (advancementVal == "Best Choice") {
+					$(this).css("background-color", "#17BCCF");
+				}
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			localStorage.setItem('token', {{user.token}});
+		})
+		$('.course-item').click(function(){
+			var seoCourseLink = $(this).children('.c-name').html().toLowerCase().replace(/\ /g, '-');
+			$(this).parent().attr('href', '/courses/' + seoCourseLink + '/' + $(this).parent().attr('href'))
+        });
+	</script>
+</div>

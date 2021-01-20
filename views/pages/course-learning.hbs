@@ -1,0 +1,185 @@
+<section class="course-learning">
+    <div class="course-learning-content">
+        <div class="fixed-chapter">
+            <div class="summary">
+                <p>Giáo Trình</p>
+                <p>Tài Liệu</p>
+                <button ><i class="fas fa-chevron-left"></i></button>
+            </div>
+            <div class="auto-next">
+                <p>Tự chuyển bài</p>        
+                <label><input type="checkbox"></label>
+            </div>
+            <div class="course-chapter">
+                <script>
+                    var i = 0;
+                    var j = 0;
+                    const currentSection = location.pathname.split("/").pop();
+                    var lectureName;
+                    console.log(localStorage.getItem('userRating'));
+                </script>
+                {{#each this.courseChapters}}
+                    <div class="course-chapter-item">
+                        <a href="#" class="item-link"><span>Section </span><span>{{this.title}}</span></a>
+                        <div class="course-section">
+                            {{#each this.sections}}
+                                <a href={{this.id}} class="course-section-item">
+                                    <p><i class="fas fa-arrow-alt-circle-right"></i></p>
+                                    <p><span>Lecture </span><span>{{this.title}}</span></p>
+                                    <span></span>
+                                    <p>{{this.length}} min</p>
+                                </a>
+                                <script>
+                                    $('.course-section-item').eq(j).children('p').children('span:first').append((j + 1).toString() + ': ');
+                                    j++;
+                                </script>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <script>
+                        $('.item-link').eq(i).children('span:first').append((i + 1).toString() + ': ');
+                        i++;
+                    </script>
+                {{/each}}
+            </div>
+            <script>
+                $('.item-link').click(function(){
+                    $(this).next().slideToggle();
+                });
+                $('.course-section-item').map(function(){
+                    if($(this).attr('href') == currentSection) {
+                        $(this).css('color','red');
+                        $(this).parent().slideToggle();
+                        lectureName = $(this).children('p').children('span:first').html() + $(this).children('p').children('span:last').html();
+                    }
+                });
+            </script>
+        </div>
+        <div class="course-video">
+            <div class="introduce">
+                <img src="https://dvkhfbm6djrbs.cloudfront.net/5e0da983adc7c20012f7f1fc/root/logo_mycourse_desktop.png" alt="">
+                <p class="course-name">Học Illustrator trọn bộ trong 7 ngày</p>
+            </div>
+            <div class="video">
+                <div class="video-content">
+                   <video poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" controls id="player">
+                        <source src="../../../../{{this.sectionVideo.urlVideo}}" type="video/mp4">
+                </div>
+                <div class="video-nav">
+                    <a class="prev-video" href="#"><i class="fas fa-step-backward"></i></a>
+                    <a class="next-video" href="#"><i class="fas fa-step-forward"></i></a>
+                    <button><i class="fas fa-flag"></i></button>
+                    <p></p>
+                </div>
+                <script>
+                    $('.video-nav p').html(lectureName);
+                    $('.prev-video').click(function(){
+                        $(this).attr('href',(currentSection - 1).toString());
+                    });
+                    $('.next-video').click(function(){
+                        $(this).attr('href',(currentSection + 1).toString());
+                    });
+                </script>
+                <div class="video-info">
+                    <div class="video-info-item">
+                        <p class="first-line">Giảng viên</p>
+                        <div class="more-info-dropdown instructor">
+                            <div class="instructor-img">
+                                <img src="#" alt="">
+                                <p></p>
+                            </div>
+                            <script>
+                                $.ajax('/instructor/5', {
+                                    success: function(data) {
+                                        $('.instructor-img img').attr('src', "../../../../" + data.image);
+                                        $('.instructor-img p').html(data.firstName + " " +data.lastName);
+                                    },
+                                    error: function(err) {
+                                        console.log(err);
+                                    }
+                                });
+                            </script>
+                            <div class="instructor-info">
+                                <p>- Giảng viên Graphic Design tại FPT Multimedia Arena từ năm 2007</p>
+                                <p>- Có hơn 15 năm làm việc trong lĩnh vực thiết kế đồ họa tại nhiều công ty thiết kế và quảng cáo với các vị trí như Trưởng phòng Thiết kế, Giám đốc Mỹ thuật, Giám đốc Điều hành công ty quảng cáo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info-item">
+                        <p class="first-line">Thông tin chung</p>
+                        <div class="more-info-dropdown course">
+                            <p><strong>Phù hợp với</strong></p>
+                            <p>Người chưa biết gì hoặc mới làm quen với Illustrtor</p>
+                            <p>Những người yêu thích thiết kế đồ họa, vẽ minh họa và muốn trở thành designer</p>
+                            <p>Những người đang đi làm và muốn học thiết kế đồ họa để hỗ trợ công việc</p>
+                            <p><strong>Mô tả tổng quát</strong></p>
+                            <p style="line-height: 20px; padding: 5px 0px">Thiết kế đồ họa là một nghề hot trong những năm gần đây nhưng không phải ai cũng có thể thành công với nghề này. Ngoài những kiến thức chuyên ngành như bố cục màu sắc, tư duy sáng tạo, thị giác và truyền thông... bạn cần có đam mê và sự nỗ lực rất lớn. Bên cạnh đó, người làm thiết kế còn phải trang bị cho mình những công cụ thiết kế cần thiết để có thể giải phóng những ý tưởng thành các bản vẽ, biến thế giới trừu tượng trong trí não thành những hình ảnh cụ thể với đường nét và màu sắc rõ ràng. Một trong những công cụ phổ biến đối với người làm thiết kế đồ họa là Illustrator, phần mềm vector số 1 trên thế giới, được đánh giá là người trợ thủ đắc lực đối với các nhà thiết kế đồ họa. Khóa học này cung cấp những kiến thức và kỹ năng để bạn có thể sử dụng Illustrator một cách thuần thục, hỗ trợ tích cực cho công việc cũng như đam mê thiết kế của bạn.</p>
+                            <p><strong>Yêu cầu khóa học</strong></p>
+                            <p>Để học Adobe Illustrator, học viên cần máy tính có cài đặt phần mềm Adobe Illustrator CC 2015.</p>
+                        </div>
+                    </div>
+                    <div class="video-info-item">
+                        <p class="first-line">Đánh giá</p>
+                        <div class="more-info-dropdown review">
+                            <p>Đánh giá của bạn</p>
+                            <p class="star-rating"></p>
+                            <p>Bạn nghĩ sao về khóa học này?</p>
+                            <textarea name="" id="" cols="40" rows="5" placeholder="Nhập ý kiến của bạn"></textarea>
+                            <button type="button" class="review-btn">Đánh Giá</button>
+                        </div>
+                        <script>
+                            var userRating;
+                            $(".star-rating").starRating({
+                                initialRating: 0,
+                                starShape:	'rounded',
+                                emptyColor: '#9198A9',
+                                strokeColor: '#EB8A2F',
+                                strokeWidth: 0,
+                                starSize: 40,
+                                callback: function(currentRating, $el){
+                                    $('.review-btn').click(function(){
+                                        const review = $('textarea').val();
+                                    });
+                                }
+                            });
+						</script>
+                    </div>
+                </div>
+                <script>
+                    $('.first-line').click(function(){
+                        $('.more-info-dropdown').hide();
+                        $('.first-line').css('border-bottom','none');
+                        $(this).next().toggle();
+                        $(this).css('border-bottom','5px solid #FF0000')
+                    });
+                </script>
+            </div>
+            <script>
+                var controls = [
+                    'play-large', // The large play button in the center
+                    'restart', // Restart playback
+                    'rewind', // Rewind by the seek time (default 10 seconds)
+                    'play', // Play/pause playback
+                    'fast-forward', // Fast forward by the seek time (default 10 seconds)
+                    'progress', // The progress bar and scrubber for playback and buffering
+                    'current-time', // The current time of playback
+                    'duration', // The full duration of the media
+                    'mute', // Toggle mute
+                    'volume', // Volume control
+                    'captions', // Toggle captions
+                    'settings', // Settings menu
+                    'pip', // Picture-in-picture (currently Safari only)
+                    'airplay', // Airplay (currently Safari only)
+                    'download', // Show a download button with a link to either the current source or a custom URL you specify in your options
+                    'fullscreen' // Toggle fullscreen
+                ];
+                plyr.setup('#player', {controls});
+            </script>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            
+        })
+    </script>
+</section>

@@ -1,0 +1,132 @@
+.title {
+  padding-bottom: 5px;
+  margin: 10px auto 0px;
+  width: 90%;
+  border-bottom: 1px solid #e2e2e2; }
+
+i {
+  font-size: 16px; }
+
+.instructor {
+  width: 90%;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: 17% 83%; }
+  .instructor button {
+    background-color: #4d84e2;
+    padding: 7px 10px;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    border-radius: 3px; }
+    .instructor button:hover {
+      cursor: pointer;
+      background-color: #3A589E; }
+  .instructor .nav {
+    margin-top: 40px;
+    margin-right: 20px;
+    height: 100%; }
+    .instructor .nav ul {
+      width: 100%;
+      height: 100%;
+      border-right: 1px solid #e2e2e2; }
+      .instructor .nav ul li {
+        width: 100%;
+        list-style: none;
+        margin: 5px 0; }
+        .instructor .nav ul li a {
+          display: inline-block;
+          width: 90%;
+          text-decoration: none;
+          padding: 7px 10px;
+          border-radius: 3px;
+          text-align: left;
+          color: #2b4272; }
+          .instructor .nav ul li a:hover {
+            background-color: #0F7C9E;
+            color: white; }
+        .instructor .nav ul li .active {
+          background-color: #4d84e2;
+          color: white; }
+  .instructor .content {
+    height: 80vh;
+    position: relative;
+    overflow: hidden; }
+    .instructor .content .course-list-wrapper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 95%;
+      margin: 0 auto; }
+      .instructor .content .course-list-wrapper .courses .header {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: space-between; }
+        .instructor .content .course-list-wrapper .courses .header h2 {
+          padding: 5px 0; }
+        .instructor .content .course-list-wrapper .courses .header button a {
+          text-decoration: none;
+          color: white; }
+      .instructor .content .course-list-wrapper .courses .course-list {
+        overflow-y: auto; }
+        .instructor .content .course-list-wrapper .courses .course-list .course {
+          display: grid;
+          grid-template-columns: 15% 50% 10% 10% 10% 5%;
+          align-items: center;
+          justify-content: center;
+          padding: 10px 10px;
+          margin: 10px;
+          border: 1px solid rgba(219, 219, 219, 0.7);
+          background-color: #f5f5f5; }
+          .instructor .content .course-list-wrapper .courses .course-list .course img {
+            width: 100px;
+            height: 60px; }
+          .instructor .content .course-list-wrapper .courses .course-list .course .info h2 {
+            font-size: 20px; }
+          .instructor .content .course-list-wrapper .courses .course-list .course .info .other-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; }
+            .instructor .content .course-list-wrapper .courses .course-list .course .info .other-info button {
+              background-color: orange;
+              border: none;
+              padding: 5px;
+              border-radius: 5px;
+              font-weight: bold; }
+            .instructor .content .course-list-wrapper .courses .course-list .course .info .other-info i {
+              font-size: 5px;
+              align-self: center; }
+            .instructor .content .course-list-wrapper .courses .course-list .course .info .other-info span:first-child {
+              color: #2D8643; }
+            .instructor .content .course-list-wrapper .courses .course-list .course .info .other-info span:last-child {
+              color: #949494;
+              font-weight: 100; }
+          .instructor .content .course-list-wrapper .courses .course-list .course .rating i {
+            color: #ffbf00; }
+          .instructor .content .course-list-wrapper .courses .course-list .course .status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+            color: white;
+            border-radius: 50%;
+            background-color: #e2e7f8; }
+            .instructor .content .course-list-wrapper .courses .course-list .course .status i {
+              font-size: 16px;
+              padding: 10px;
+              border-radius: 50%;
+              color: #ff0000; }
+            .instructor .content .course-list-wrapper .courses .course-list .course .status .complete {
+              color: green; }
+          .instructor .content .course-list-wrapper .courses .course-list .course:hover {
+            cursor: pointer;
+            background-color: #e5e5e5; }
+    .instructor .content .info-wrapper {
+      position: absolute;
+      left: 0;
+      top: 0; }
+      .instructor .content .info-wrapper .info {
+        display: none; }

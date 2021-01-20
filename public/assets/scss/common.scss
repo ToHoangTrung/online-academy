@@ -1,0 +1,15 @@
+.form-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  label {
+    margin:  5px 0;
+  }
+
+  input {
+    border-radius: 10px;
+    height: 40px;
+    width: 350px;
+  }
+}

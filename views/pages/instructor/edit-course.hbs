@@ -1,0 +1,400 @@
+<div class="add-course">
+	<div class="nav">
+		<ul>
+			<li><a class="nav-route active">Basic info</a></li>
+			<li><a class="nav-route">Content</a></li>
+			<li><a class="nav-route">Public</a></li>
+		</ul>
+	</div>
+	<div class="content">
+
+		<div class="basic-info-wrapper route-wrapper">
+			<div class="info">
+				<div class="header">
+					<h2>Edit course</h2>
+					<button id="deleteCourseButton">Delete</button>
+				</div>
+				<script>
+					$('#deleteCourseButton').on('click', () => {
+						Swal.fire({
+							title: 'Do you want to delete the course?',
+							showCancelButton: true,
+							confirmButtonText: `Delete`,
+							confirmButtonColor: '#fa3c3c',
+						}).then((result) => {
+							if (result.isConfirmed) {
+								$.ajax({
+									method: 'DELETE',
+									url: '/instructor/course/{{course.id}}',
+									success: (data) => {
+										if (data) {
+											window.location.href = '/instructor'
+										} else {
+											Swal.fire({
+												icon: 'error',
+												title: 'Failed!',
+												text: 'Error on deleting course'
+											})
+										}
+									}
+								})
+							}
+						})
+					})
+				</script>
+				<form action="/instructor/edit-course" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<div class="form-control">
+							<label for="">Course Id</label>
+							<input type="text" name="id" value="{{course.id}}" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-control">
+							<label for="">Name</label>
+							<input type="text" name="name" value="{{course.name}}">
+						</div>
+						<div class="form-control">
+							<label for="">Headline</label>
+							<input type="text" name="headline" value="{{course.headline}}">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-control">
+							<label for="">Level</label>
+							<select name="levelId" id="levelSelect">
+								{{#each this.levels}}
+									<option value="{{this.id}}"
+									        style="padding: 5px">{{this.description}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-control">
+							<label for="">Category</label>
+							<select name="categoryId" id="categorySelect">
+								{{#each this.categories}}
+									<option value="" selected style="display: none">Category</option>
+									<option value="{{this.id}}"
+									        style="padding: 5px">{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-control">
+							<label for="">Subcategory</label>
+							<select name="subCategoryId" id="subCategory">
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-control">
+							<label for="">Image</label>
+							<label for="fileInput" class="imageInputLabel">
+								<div class="image-wrapper">
+									<img src="../../{{course.image}}" alt="" id="courseImage"/>
+								</div>
+							</label>
+							<input type="file" name="image" style="display: none" id="fileInput"
+							       onchange="readURL(this);"
+							       accept="image/x-png,image/gif,image/jpeg"/>
+							<script>
+								function readURL(input) {
+									if (input.files && input.files[0]) {
+										const reader = new FileReader();
+										reader.onload = function (e) {
+											$('#courseImage')
+													.attr('src', e.target.result)
+													.width(350)
+													.height(200);
+										};
+
+										reader.readAsDataURL(input.files[0]);
+									}
+								}
+							</script>
+						</div>
+					</div>
+					<textarea id="editor" name="description" style="height: 400px"
+					          placeholder="Course description"></textarea>
+					<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+					<script>
+						ClassicEditor.create(document.querySelector('#editor'))
+								.then(editor => {
+									console.log(editor);
+								})
+								.catch(error => {
+									console.error(error);
+								});
+					</script>
+					<div class="form-group" style="width: 50%">
+						<div class="form-control">
+							<label for="">Price</label>
+							<input type="number" name="price" value="{{course.price}}">
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Save">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="add-course-content-wrapper route-wrapper">
+			<div class="add-course-content">
+				<div class="chapter-list">
+					{{#each courseChapters}}
+						<div class="chapter">
+							<div class="chapter-header">
+								<div class="text">
+									<span class="label">Chapter:</span>
+									<span class="title">{{this.title}}</span>
+								</div>
+								<button id="deleteChapterButton_{{id}}">Delete chapter <i class="fas fa-trash"></i>
+								</button>
+								<script>
+									$('#deleteChapterButton_{{id}}').on('click', () => {
+										Swal.fire({
+											title: 'Do you want to delete the lesion?',
+											showCancelButton: true,
+											confirmButtonText: `Delete`,
+											confirmButtonColor: '#fa3c3c',
+										}).then((result) => {
+											if (result.isConfirmed) {
+												$.ajax({
+													method: 'DELETE',
+													url: '/instructor/course/{{courseId}}/chapter/{{id}}',
+													success: (data) => {
+														if (data) {
+															location.reload();
+														} else {
+															Swal.fire({
+																icon: 'error',
+																title: 'Failed!',
+																text: 'Error on deleting chapter'
+															})
+														}
+													}
+												})
+											}
+										})
+
+									})
+								</script>
+							</div>
+							<div class="lesion-list">
+								{{#each this.sections}}
+									<div class="update-lesion-form">
+										<form action="/instructor/course/{{../courseId}}/chapter/{{courseChapterId}}/update-lesion"
+										      method="post" enctype="multipart/form-data">
+											<div class="text-field">
+												<input type="text" value="{{this.id}}" name="id" hidden>
+												<div class="form-control">
+													<label for="">Lesion title:</label>
+													<input type="text" name="title" value="{{this.title}}">
+												</div>
+												<div class="form-control">
+													<label for="">Description:</label>
+													<input type="text" name="description" value="{{this.description}}">
+												</div>
+
+												<label for="">Upload video</label>
+												<input type="file" name="video" accept="video/mp4,video/x-m4v,video/*">
+											</div>
+											<div class="buttons">
+												<input type="submit" value="Update">
+												<button id="deleteButton_{{id}}" type="button">Delete</button>
+												<script>
+													$('#deleteButton_{{id}}').on('click', () => {
+														Swal.fire({
+															title: 'Do you want to delete the lesion?',
+															showCancelButton: true,
+															confirmButtonText: `Delete`,
+															confirmButtonColor: '#fa3c3c',
+														}).then((result) => {
+															/* Read more about isConfirmed, isDenied below */
+															if (result.isConfirmed) {
+																$.ajax({
+																	method: 'DELETE',
+																	url: '/instructor/course/{{../courseId}}/chapter/{{courseChapterId}}/lesion/{{id}}',
+																	success: (data) => {
+																		if (data) {
+																			location.reload();
+																		} else {
+																			Swal.fire({
+																				icon: 'error',
+																				title: 'Failed!',
+																				text: 'Error on deleting lesion'
+																			})
+																		}
+																	}
+																})
+															}
+														})
+													})
+												</script>
+											</div>
+										</form>
+									</div>
+								{{/each}}
+							</div>
+							<div class="lesion-form">
+								<form id="addLesionForm_{{id}}"
+								      action="/instructor/course/{{this.courseId}}/chapter/{{this.id}}/add-lesion"
+								      method="post" enctype="multipart/form-data">
+									<div class="text-field">
+										<div class="form-control">
+											<label for="">Lesion title:</label>
+											<input type="text" name="title">
+										</div>
+										<div class="form-control">
+											<label for="">Description:</label>
+											<input type="text" name="description">
+										</div>
+										<label for="">Upload video</label>
+										<input type="file" name="video" accept="video/mp4,video/x-m4v,video/*">
+									</div>
+									<input type="submit" value="Add lesson">
+								</form>
+								<script>
+									const validateAddLesionForm_{{id}} = () => {
+										if (addLesionForm_{{id}}.title.value.length === 0) {
+											return 'Title is required';
+										}
+									}
+									$('#addLesionForm_{{id}}').on('submit', (e) => {
+										e.preventDefault();
+										const message = validateAddLesionForm_{{id}}();
+										console.log(message);
+										if (message) {
+											Swal.fire({
+												icon: 'error',
+												title: 'Invalid input!',
+												text: message
+											})
+										} else {
+											$('#addLesionForm_{{id}}').off('submit').submit();
+										}
+									})
+								</script>
+							</div>
+						</div>
+					{{/each}}
+				</div>
+				<button class="add-button" id="addChapterButton"><i class="fas fa-plus-circle"></i> Add chapter</button>
+			</div>
+		</div>
+		<div class="public-course-wrapper route-wrapper">
+			{{#if course.status}}
+				<div class="bade">
+					This course is already public
+				</div>
+			{{else}}
+				<button>Public course</button>
+			{{/if}}
+		</div>
+	</div>
+	<div class="modal">
+		<div class="modal-container">
+			<div class="header">
+				<span><i class="fas fa-flag"></i> Add chapter</span>
+			</div>
+			<div class="content">
+				<div class="add-chapter">
+					<form action="/instructor/course/{{course.id}}/add-chapter" method="post">
+						<div class="form">
+							<div class="form-control">
+								<label for="">Title</label>
+								<input type="text" placeholder="Title..." name="title">
+							</div>
+						</div>
+						<div class="buttons">
+							<button id="addChapterCancelButton" type="button">Cancel</button>
+							<input id="addChapterAddButton" type="submit" value="Add">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="empty" style="height: 100px;"></div>
+	</div>
+	<!--	show modal-->
+	<script>
+		const modal = $('.modal')
+		const modalContainer = $('.modal-container')
+		$(document).keyup(function (e) {
+			if (e.key === "Escape") { // escape key maps to keycode `27`
+				modal.hide();
+				console.log(e.target)
+				modal.css('display', 'none');
+				modalContainer.css('display', 'none');
+			}
+		});
+		const hideModal = (e => {
+			if ($(e.target).is('.modal')) {
+				modal.hide();
+				console.log(e.target)
+				modal.css('display', 'none');
+				modalContainer.css('display', 'none');
+			}
+		})
+		$('#addChapterButton').on('click', () => {
+			modal.css('display', 'flex');
+			modalContainer.css('display', 'flex');
+		})
+		$('.modal').on('click', hideModal)
+		$('#addChapterCancelButton').on('click', (e) => {
+			modal.hide();
+			modal.css('display', 'none');
+			modalContainer.css('display', 'none');
+		})
+	</script>
+	<!--	toggle tabview-->
+	<script>
+		$('.nav-route').on('click', e => {
+			$('.nav-route').removeClass('active');
+			e.target.classList.add('active');
+			$('.route-wrapper').css('display', 'none')
+			console.log(e.target.text);
+			switch (e.target.text) {
+				case 'Basic info':
+					$('.basic-info-wrapper').css('display', 'block');
+					break;
+				case 'Content':
+					$('.add-course-content-wrapper').css('display', 'block');
+					break;
+				case 'Public':
+					$('.public-course-wrapper').css('display', 'block');
+					break;
+				default:
+			}
+		})
+	</script>
+	<!--	dynamic category and subcategory-->
+	<script>
+		$('document').ready(() => {
+			const categoryId = "{{course.categoryLink.categoryId}}";
+			$('#levelSelect').val("{{course.levelId}}");
+			$('#categorySelect').val(categoryId);
+			$.getJSON(`/api/category/${categoryId}/sub-category`, (data) => {
+				console.log(data);
+				$('#subCategory').empty();
+				data[0].subCategories.forEach(s => {
+					$('#subCategory').append($('<option>', {text: s.name, value: s.id}));
+				})
+				$('#subCategory').val("{{course.categoryLink.subCategoryId}}");
+			})
+		})
+		$('#categorySelect').on('change', (e) => {
+			const value = e.target.value;
+			console.log(value % 1 == 0);
+			console.log(value);
+			if (value % 1 == 0) {
+				$.getJSON(`/api/category/${value}/sub-category`, (data) => {
+					$('#subCategory').empty();
+					data[0].subCategories.forEach(s => {
+						$('#subCategory').append($('<option>', {text: s.name, value: s.id}));
+					})
+
+				})
+			}
+		})
+	</script>
+</div>

@@ -1,0 +1,499 @@
+
+.add-course {
+  width: 80%;
+  margin: 20px auto;
+
+  .nav {
+    ul {
+      margin-bottom: 10px;
+      border-bottom: 2px solid #bfbfbf;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .active {
+        border-bottom: 2px solid #4d84e2;
+        color: #4d84e2;
+      }
+
+      li {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+          padding: 8px 20px;
+          flex: 1;
+          text-decoration: none;
+          color: #484848;
+          font-size: 18px;
+          transform: translateY(2px);
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+
+    }
+
+  }
+
+  .content {
+    .basic-info-wrapper {
+
+      .info {
+        width: 60%;
+        .header {
+          display: flex;
+          justify-content: space-between;
+          button {
+            margin-top: 10px;
+            margin-left: 40px;
+            color: white;
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            padding: 7px 10px;
+            background-color: #d0383f;
+            font-weight: bold;
+
+            &:hover {
+              cursor: pointer;
+              filter: brightness(80%);
+            }
+          }
+        }
+        .imageInputLabel {
+          &:hover {
+            cursor: pointer;
+            filter: brightness(60%);
+          }
+        }
+
+        .image-wrapper {
+          width: 350px;
+          height: 200px;
+          background-color: gainsboro;
+          border-radius: 4px;
+
+          img {
+            border-radius: 4px;
+            object-fit: cover;
+            width: 350px;
+            height: 200px;
+          }
+        }
+      }
+    }
+
+    .add-course-content-wrapper {
+      display: none;
+      .add-course-content {
+        .add-button {
+          padding: 5px 10px;
+          margin: 5px;
+          border: none;
+          outline: none;
+          border-radius: 3px;
+
+          &:hover {
+            cursor: pointer;
+            filter: brightness(103%);
+          }
+
+          i {
+            color: #4d84e2;
+            margin-right: 3px;
+          }
+        }
+
+        .chapter-list {
+          .chapter {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+
+            .chapter-header {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              .text {
+                .label {
+                  color: gray;
+                  font-size: 16px;
+                  margin-right: 10px;
+                }
+
+                .title {
+                  font-size: 18px;
+                  font-weight: 600;
+                }
+              }
+              button {
+                background-color: #ff5b5b;
+                color: white;
+                border: none;
+                outline: none;
+                padding: 7px 10px;
+                  border-radius: 3px;
+                &:hover {
+                  background-color: #dd3333;
+                  cursor: pointer;
+                }
+                i {
+                  color: white;
+                  margin-left: 5px;
+                }
+              }
+            }
+
+            .lesion-list {
+              margin: 10px;
+              margin-left: 30px;
+
+              .lesion {
+                margin: 10px 0;
+                background-color: rgba(226, 226, 226, 0.15);
+                padding: 10px;
+                border-radius: 4px;
+
+                input {
+                  width: 400px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  outline: none;
+                  border: none;
+                  background: none;
+                  border-bottom: 2px solid gray;
+                  margin: 10px 0;
+
+                  &:focus {
+                    border-bottom: 2px solid #4d84e2;
+                  }
+                }
+
+                .form-input {
+                  label {
+                    display: inline-block;
+                    color: gray;
+                    font-size: 16px;
+                    margin-right: 10px;
+                    width: 80px;
+                  }
+
+
+                }
+
+                .description {
+                  color: #393939;
+                }
+              }
+
+              border-bottom: 1px solid #efefef;
+            }
+
+            .form-control {
+              display: grid;
+              grid-template-columns: 100px 300px;
+              align-items: center;
+              flex-direction: row;
+              margin: 10px 0;
+
+              input {
+                background: none;
+                outline: none;
+                border: 2px solid gray;
+                padding: 5px;
+                border-radius: 3px;
+
+                &:focus {
+                  border: 2px solid #4E7FDE;
+                }
+              }
+            }
+
+            input[type=submit] {
+              padding: 7px 20px;
+              border-radius: 2px;
+              background-color: #4E7FDE;
+              color: white;
+              border: none;
+              outline: none;
+
+              &:hover {
+                background-color: #3A589E;
+                cursor: pointer;
+              }
+            }
+
+            .update-lesion-form {
+              border-radius: 5px;
+              background-color: rgba(245, 245, 245, 0.6);
+
+              form {
+                padding: 10px;
+                border-radius: 3px;
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+
+                .buttons {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+
+                  button {
+                    margin-top: 5px;
+                    padding: 7px 20px;
+                    border-radius: 2px;
+                    background-color: #ff4358;
+                    color: white;
+                    border: none;
+                    outline: none;
+
+                    &:hover {
+                      background-color: #e31837;
+                      cursor: pointer;
+                    }
+                  }
+                }
+              }
+            }
+
+            .lesion-form {
+              margin-left: 20px;
+              padding: 0 10px;
+
+              form {
+                padding: 10px;
+                border-radius: 3px;
+                background-color: rgba(209, 230, 245, 0.3);
+                margin-top: 20px;
+
+                input[type=submit] {
+                  margin-top: 10px;
+
+                  &:hover {
+                    background-color: #3A589E;
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+    .public-course-wrapper {
+      display: none;
+      button {
+        margin-top: 10px;
+        margin-left: 40px;
+        color: whitesmoke;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        padding: 7px 10px;
+        background-color: #00A65A;
+
+        &:hover {
+          cursor: pointer;
+          filter: brightness(80%);
+        }
+      }
+      .bade {
+        padding: 10px;
+        background-color: #15b56c;
+        color: whitesmoke;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .modal {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(1, 1, 1, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .modal-container {
+      z-index: 20001;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+      padding: 10px;
+
+      .header {
+        margin: 10px;
+        padding: 10px 0;
+        border-bottom: 2px solid #1b567c;
+
+        i {
+          color: #4ba3e7;
+        }
+      }
+
+      .content {
+        margin: 10px;
+        flex: 1;
+
+        .add-chapter {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          width: 30vw;
+          height: 150px;
+
+          form {
+            width: 80%;
+
+            .form-control {
+              width: 100%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+
+              label {
+                margin-right: 10px;
+              }
+
+              input {
+                flex: 1;
+                border: 1px solid #737373;
+                outline: none;
+                height: 35px;
+                flex: 1;
+                border-radius: 3px;
+                padding: 10px;
+
+                &:focus {
+                  border: 1px solid #4d84e2;
+                  box-shadow: 0 0 1px 2px #A6D5FA;
+                }
+              }
+            }
+          }
+
+          .buttons {
+            width: 100%;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button, input[type=submit] {
+              border-radius: 2px;
+              border: 1px solid transparent;
+              outline: none;
+              width: 40%;
+              padding: 10px 10px;
+              box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
+
+            #addChapterAddButton {
+              background-color: #4d84e2;
+              color: white;
+
+              &:hover {
+                border: 1px solid #2657ac;
+                background-color: #3e74d2;
+              }
+            }
+
+            #addChapterCancelButton {
+              background-color: white;
+              color: gray;
+
+              &:hover {
+                border: 1px solid #e7e7e7;
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  .form-group {
+    margin: 10px 0px;
+    padding: 0px 0px 30px;
+    border-bottom: 1px solid #e3e3e3;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .form-control {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+
+      label {
+        margin: 5px 0;
+        font-weight: 300;
+        color: #333D49;
+      }
+
+      input, textarea, select {
+        border-radius: 5px;
+        height: 35px;
+        width: 100%;
+        outline: none;
+        padding: 10px;
+        border: 1px solid #A3AFBF;
+      }
+
+      textarea {
+        height: 100px;
+      }
+    }
+
+    input[type=submit] {
+      background-color: #4d84e2;
+      color: white;
+      width: 100px;
+      height: 35px;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      justify-self: flex-end;
+      align-self: flex-end;
+      border-radius: 3px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #3862a7;
+      }
+    }
+
+    input:read-only {
+      background-color: #e5e5e5;
+    }
+  }
+}

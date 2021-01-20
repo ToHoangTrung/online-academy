@@ -1,0 +1,82 @@
+<h2 class="title"><i class="fas fa-angle-right"></i> Instructor</h2>
+<div class="instructor">
+	<div class="nav">
+		<ul>
+			<li><a class="nav-route active">Courses</a></li>
+			<li><a class="nav-route">Profile</a></li>
+			<li><a href="/logout" class="nav-route">Log out</a></li>
+		</ul>
+	</div>
+	<div class="content">
+		<div class="course-list-wrapper route-wrapper">
+			<div class="courses">
+				<div class="header">
+					<h2>Your courses</h2>
+					<button><a href="/instructor/course/add-course"><i class="fas fa-plus"></i> New courses</a></button>
+				</div>
+				<div class="course-list">
+					{{#each this.courses}}
+						<div class="course course-{{this.id}}">
+							<img src="../../{{this.image}}"
+							     alt="">
+							<div class="info">
+								<h2>{{this.name}} </h2>
+								<div class="other-info">
+									<span>{{this.estimateContentLength}} total hours</span>
+									<i class="fas fa-circle" style="margin: 0px 5px"></i>
+									<span>updated on {{this.updatedDate}}</span>
+								</div>
+							</div>
+							<div class="rating">
+								<span>{{this.rating}}</span>
+								<i class="fas fa-star"></i>
+							</div>
+							<div class="number-of-member">
+								<i class="fas fa-users"></i>
+								<span>{{this.numStudentEnroll}}</span>
+							</div>
+							<div class="cost">
+								<h4>{{this.concurrency}} {{this.price}}</h4>
+								<span>{{this.concurrency}} {{this.price}}</span>
+							</div>
+							<div class="status">
+								{{#if status}}
+									<i class="fas fa-check complete"></i>
+								{{else}}
+									<i class="fas fa-exclamation"></i>
+								{{/if}}
+							</div>
+							<script>
+								$(".course-{{this.id}}").on('click', () => {
+									window.location.href = `/instructor/edit-course/` + "{{this.id}}";
+								})
+							</script>
+						</div>
+					{{/each}}
+				</div>
+
+			</div>
+		</div>
+		<div class="info-wrapper route-wrapper">
+			<div class="info">
+				profile
+			</div>
+		</div>
+	</div>
+	<script>
+		$('.nav-route').on('click', e => {
+			$('.nav-route').removeClass('active');
+			e.target.classList.add('active');
+			$('.route-wrapper').css('display', 'none')
+			switch (e.target.text) {
+				case 'Profile':
+					$('.info-wrapper').css('display', 'block');
+					break;
+				case 'Courses':
+					$('.course-list-wrapper').css('display', 'block');
+				    break;
+				default:
+			}
+		})
+	</script>
+</div>

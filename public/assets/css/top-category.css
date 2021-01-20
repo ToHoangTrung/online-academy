@@ -1,0 +1,78 @@
+.top-category {
+  background-color: #333D49;
+  padding: 10px 10%;
+  position: relative;
+  font-size: 15px;
+  display: inline-block;
+  border-top: 1px solid white; }
+  .top-category a {
+    display: block;
+    color: black;
+    text-decoration: none; }
+  .top-category p:first-child {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: white;
+    display: inline;
+    padding: 10px;
+    cursor: pointer; }
+    .top-category p:first-child:hover {
+      filter: brightness(120%); }
+  .top-category .category-content {
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    display: none;
+    z-index: 1;
+    top: 43px;
+    border: 1px solid whitesmoke; }
+    .top-category .category-content .category-item {
+      width: 100%;
+      background-color: white;
+      border-radius: 5px; }
+      .top-category .category-content .category-item a {
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 20% 80%;
+        align-items: center;
+        justify-content: flex-start;
+        border-bottom: 1px solid whitesmoke; }
+        .top-category .category-content .category-item a i {
+          justify-self: center;
+          color: grey; }
+        .top-category .category-content .category-item a:last-child {
+          border-bottom: none; }
+      .top-category .category-content .category-item:hover {
+        background-color: #d6d3d3; }
+        .top-category .category-content .category-item:hover a {
+          color: white; }
+      .top-category .category-content .category-item:hover .sub-category-content {
+        display: inline; }
+      .top-category .category-content .category-item .sub-category-content {
+        z-index: 1;
+        display: none;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        top: 0;
+        left: 100%;
+        border-radius: 5px;
+        border: 1px solid whitesmoke; }
+        .top-category .category-content .category-item .sub-category-content a {
+          padding: 10px;
+          display: grid;
+          grid-template-columns: 20% 80%;
+          align-items: center;
+          justify-content: flex-start;
+          color: black; }
+          .top-category .category-content .category-item .sub-category-content a i {
+            justify-self: center;
+            color: grey; }
+          .top-category .category-content .category-item .sub-category-content a:hover {
+            background-color: #d6d3d3;
+            color: white; }
+  .top-category:hover .category-content {
+    display: block; }

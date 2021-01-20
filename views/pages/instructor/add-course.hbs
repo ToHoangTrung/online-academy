@@ -1,0 +1,97 @@
+<div class="add-course">
+
+	<div class="info">
+		<h2>Add new course</h2>
+		<form action="/instructor/course" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<div class="form-control">
+					<label for="">Name</label>
+					<input type="text" name="name">
+				</div>
+				<div class="form-control">
+					<label for="">Headline</label>
+					<input type="text" name="headline">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control">
+					<label for="">Level</label>
+					<select name="levelId">
+						{{#each this.levels}}
+							<option value="{{this.id}}"
+							        style="padding: 5px">{{this.description}}</option>
+						{{/each}}
+					</select>
+				</div>
+				<div class="form-control">
+					<label for="">Category</label>
+					<select name="categoryId" id="categorySelect">
+						{{#each this.categories}}
+							<option value="" selected style="display: none">Category</option>
+							<option value="{{this.id}}"
+							        style="padding: 5px">{{this.name}}</option>
+						{{/each}}
+					</select>
+				</div>
+				<div class="form-control">
+					<label for="">Subcategory</label>
+					<select name="subCategoryId" id="subCategory">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control">
+					<label for="">Image</label>
+					<label for="fileInput" class="imageInputLabel">
+						<div class="image-wrapper">
+							<img src="" alt="" id="courseImage"/>
+						</div>
+					</label>
+					<input type="file" name="image" style="display: none" id="fileInput"
+					       onchange="readURL(this);"/>
+					<script>
+						function readURL(input) {
+							if (input.files && input.files[0]) {
+								const reader = new FileReader();
+								reader.onload = function (e) {
+									$('#courseImage')
+											.attr('src', e.target.result)
+											.width(350)
+											.height(200);
+								};
+
+								reader.readAsDataURL(input.files[0]);
+							}
+						}
+					</script>
+				</div>
+			</div>
+			<div class="form-group" style="width: 50%">
+				<div class="form-control">
+					<label for="">Price</label>
+					<input type="number" name="price">
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Add">
+			</div>
+		</form>
+	</div>
+	<script>
+		$('#categorySelect').on('change', (e) => {
+			const value = e.target.value;
+			console.log(value % 1 == 0);
+			console.log(value);
+			if (value % 1 == 0) {
+				$.getJSON(`/api/category/${value}/sub-category`, (data) => {
+					console.log(data);
+					$('#subCategory').empty();
+					data[0].subCategories.forEach(s => {
+						$('#subCategory').append($('<option>', {text: s.name, value: s.id}));
+					})
+
+				})
+			}
+		})
+	</script>
+</div>

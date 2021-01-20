@@ -1,0 +1,138 @@
+<section class="cart">
+    {{#unless this.code}}
+    <div class="empty-cart">
+        <div class="cart-headline">
+            <p>Giỏ hàng (0 khóa học)</p>
+        </div>
+        <div class="empty-cart-content">
+            <div class="info">
+                <button><i class="fas fa-shopping-cart"></i></button>
+                <p>Hiện tại giỏ hàng của bạn chưa có khóa học nào. <br/>Vui lòng lựa chọn khóa học mà bạn muốn học.</p>
+            </div>
+            <button>Xem danh sách khóa học</button>
+        </div>
+    </div>
+    {{else}}
+    <div class="cart-content">
+        <div class="cart-headline">
+            <p>Giỏ hàng ({{this.userUnPaymentInvoice.courses.length}} khóa học)</p>
+        </div>
+        <div class="course-list">
+            {{#each this.userUnPaymentInvoice.courses}}
+                <div class="course-list-item">   
+                    <img src="../../../{{this.image}}" alt="">
+                    <div class="name">
+                        <p>{{this.name}}</p>
+                        <p>{{this.instructor.basicInfo.firstName}} {{this.instructor.basicInfo.lastName}}</p>
+                    </div>
+                    <div class="price">
+                        <p>{{this.price}} $</p>
+                        <p>{{this.prePrice}} $</p>
+                    </div>
+                    <button><i class="fas fa-trash-alt"></i></button>
+                </div>
+            {{/each}}
+        </div>
+        <div class="price-summary">
+            <div class="summary-price">
+                <p class="cart-info">Thông tin đơn hàng</p>
+                <div class="price">
+                    <p><span>Tạm tính</span><span></span></p>
+                    <p class="coupon-accept" style="display: none;"><span>1</span><span>1</span></p>
+                    <hr/>
+                    <p><span>Tổng tiền</span><span></span></p>
+                </div>
+                <script>
+                    var sumPrice = 0;
+                    $('.course-list-item .price').map(function(){
+                        sumPrice += +$(this).children('p:first').html().replace('$','');
+                    });
+                    $('.summary-price .price').children('p:first').children('span:last').html(sumPrice + " $");
+                    $('.summary-price .price').children('p:last').children('span:last').html(sumPrice + " $");
+                </script>
+            </div>
+            <div class="coupon-select">
+                <p class="coupon-text">Chọn mã giảm giá</p>
+                <form action="cart/check_coupon" method="POST">
+                    <input type="text" placeholder="Mã giảm giá (nếu có)" id="ok"/>
+                    <button type="button" class="choose-coupon-btn">Áp dụng</button>
+                </form>
+                <p class="notification" style="display: none;"></p>
+            </div>
+            <button class="to-payment-btn">Tiến hành đặt mua</button>
+            <div class="promotion">
+                <p><i class="fas fa-piggy-bank"></i>Giảm 10% khi thanh toán online (tối đa 20K)</p>
+                <p><i class="fas fa-undo-alt"></i>Cam kết hoàn tiền</p>
+                <p><i class="fas fa-chalkboard-teacher"></i>Học trên máy tính và ứng dụng di động</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var couponId = 1;
+            $('.choose-coupon-btn').click(function(){
+                if($(this).html() == "Bỏ Coupon"){
+                    $('.coupon-accept').hide();
+                    $('.summary-price .price').children('p:last').children('span:last').html(sumPrice + " $");
+                    $('.choose-coupon-btn').html('Áp dụng');
+                    $(".coupon-select form input").val('');
+                    $(".notification").html('Bạn đã hủy bỏ mã giảm giá').show();
+                }
+                else{
+                    var link =  $(".coupon-select form").attr("action");
+                    var coupon = $(".coupon-select form input").val();
+                    $.ajax({
+                        type: "POST",
+                        url: link,
+                        dataType: 'json',
+                        data: {
+                            code: coupon
+                        },
+                        success: function (data) {
+                            if(data.code === '00'){
+                                var priceDiscout = 0;
+                                couponId = data.coupon.id;
+                                if(data.coupon.percentDiscount > 0)
+                                    priceDiscout = sumPrice * data.coupon.percentDiscount / 100;
+
+                                else if(data.coupon.amountDiscount > 0) 
+                                    priceDiscout = data.coupon.amountDiscount;
+                                $(".notification").hide();
+                                $('.coupon-accept').show();
+                                $('.coupon-accept span:first').html('Mã giảm giá ' + data.coupon.code);
+                                $('.coupon-accept span:last').html('-' + priceDiscout + ' $');
+                                $('.summary-price .price').children('p:last').children('span:last').html(sumPrice - priceDiscout + " $");
+                                $('.choose-coupon-btn').html('Bỏ Coupon');
+                            }
+                            else{
+                                $(".notification").html('Mã giảm giá không hợp lệ hoặc hết hạn').show();
+                            }
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    });   
+                }
+            }); 
+            $('.to-payment-btn').click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: '/cart/to_payment',
+                    dataType: 'json',
+                    data: {
+                        coupon: couponId,
+                        invoiceId: "{{this.userUnPaymentInvoice.id}}"
+                    },
+                    success: function (data) {
+                        if(data.code === '00')
+                            location.href= data.paymentLink;
+                    },
+                    error: function(error){
+                        console.log(error.message);
+                    }
+                });
+            })
+        });
+    </script>
+    {{/unless}}
+</section>

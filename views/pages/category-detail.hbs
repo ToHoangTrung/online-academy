@@ -1,0 +1,381 @@
+<section class="category-detail">
+    <script>
+        const {id, rating, duration, level, price, order, topic, collection} = getAllUrlParams(location.href);
+        var paramsFilter = { 
+            'id': id,
+            'page': parseInt({{this.currentPage}}),
+            'rating': rating === undefined ? '3.0' : rating,
+            'duration': [],
+            'level': [],
+            'price': [],
+            'order': order === undefined ? 'most-enrolled' : order,
+            'topic': topic === undefined ? '' : topic
+        };
+        if(typeof duration === typeof "") paramsFilter.duration[0] = duration; 
+        else if(typeof duration === typeof {}) paramsFilter.duration = [...duration];
+        if(typeof level === typeof "") paramsFilter.level[0] = level; 
+        else if(typeof level === typeof {}) paramsFilter.level = [...level];
+        if(typeof price === typeof "") paramsFilter.price[0] = price; 
+        else if(typeof price === typeof {}) paramsFilter.price = [...price];
+    </script>
+    <div class="category-headline">
+        {{#each this.subcategoriesByCategory}}
+            <img src="../../{{this.image}}" alt="">
+            <p>{{this.name}} Courses</p>
+        {{/each}}
+    </div>
+    <div class="basic-course">
+		<a href="#" style="color:#A541B5">Courses to get you started</a>
+		<div class="basic-content">
+			{{#each this.popularCategoryCourses}}
+				<a href={{this.id}}><div class="basic-item">
+					<img class="course-img" src="../../{{this.image}}" alt={{this.name}}>
+					<p class="c-name">{{this.name}}</p>
+					<p>{{this.instructor.basicInfo.firstName}} {{this.instructor.basicInfo.lastName}}</p>
+					<p><span>{{this.rating}}</span><span class="star-rating"></span><span>({{this.numReview}})</span></p>
+					<p><span>$ {{this.price}}</span><span>$ {{this.prePrice}}</span></p>
+					<p><span class="advancement">{{this.advancement.description}}</span></p>
+					<script>
+						$(".star-rating").starRating({
+							initialRating: {{this.rating}},
+							strokeColor: '#EB8A2F',
+							strokeWidth: 10,
+							starSize: 15,
+							readOnly: false
+						});
+					</script>
+				</div></a>
+			{{/each}}
+		</div>
+        <script>
+            $('.basic-item').click(function(){
+                var seoCourseLink = $(this).children('.c-name').html().toLowerCase().replace(/\ /g, '-');
+                $(this).parent().attr('href', '/courses/' + seoCourseLink + '/' + $(this).parent().attr('href'))
+            });
+        </script>
+	</div>
+    <div class="topic-recommend">
+        <P class="headline">Popular topics</P>
+        <div class="topic-recommend-content">
+            {{#each this.popularSubCategories}}
+                <div class="topic-recommend-item">
+                    <a href="#">{{this.subName}}</a>
+                </div>
+            {{/each}}
+            <script>
+                var courseTopic = paramsFilter.topic;
+                $('.topic-recommend-item a').click(function(){
+                    const formatName = $(this).html().replace(/\ /g, '-').toLowerCase();
+                    if(formatName == paramsFilter.topic)
+                        paramsFilter.topic = "";
+                    else paramsFilter.topic = formatName;
+                    location.search = encodeQueryData(paramsFilter);
+                });
+            </script>
+        </div>
+	</div>
+    <div class="all-course">
+        <a href="#" class="headline" style="color:#48575E">
+            {{#each this.subcategoriesByCategory}}
+                <span class="headline-page">All {{this.name}} Courses</span></a>
+            {{/each}}
+        <p class="guarantee"><span><i class="fas fa-exclamation-circle"></i></span>Not sure? All courses have a 30-day money-back guarantee</p>
+        <div class="all-course-content">
+            <div class="set-filter">
+                <p>{{this.totalItems}} Results</p>
+                <button>Clear Filter</button>
+                <script>
+                    $('.set-filter button').click(function(){
+                        paramsFilter.rating = '3.0';
+                        paramsFilter.duration = [...[]];
+                        paramsFilter.level = [...[]];
+                        paramsFilter.price = [...[]];
+                        paramsFilter.order = '';
+                        paramsFilter.topic = '';
+                        location.search = encodeQueryData(paramsFilter);
+                    });
+                </script>
+            </div>
+            <div class="filter-cube">
+                    <button><i class="fab fa-google-drive"></i><span>Filter</span></button>
+                    <div></div>
+                    <button style="display: none">{{this.totalItems}} results</button>
+                    <button class="ok1">Most Enrolled</button>
+                    <button>Top Rating</button>
+                    <button>Top Newest</button>
+                    <button>Price Low To High</button>
+                    <button>Price High To Low</button>
+            </div>
+            <script>
+                var courseOrder = paramsFilter.order;
+                $('.filter-cube button').map(function(){
+                    if(courseOrder == $(this).html().toLowerCase().replace(/\ /g, '-')){
+                        $(this).css('color','white');
+                    }
+                    $(this).bind('click',function(){
+                        paramsFilter.order = $(this).html().toLowerCase().replace(/\ /g, '-');
+                        location.search = encodeQueryData(paramsFilter);
+                    });
+                });
+            </script>
+            <div class="filter-content">
+                <div class="filter-item">
+                    {{#each this.subcategoriesByCategory}}
+                        <p class="topic-dropdown">{{this.name}}</p>
+                    {{/each}}
+                    <div class="filter-dropdown">
+                        {{#each this.subcategoriesByCategory}}
+                            {{#each this.subCategories}}
+                                <label class="sub-category-topic">{{this.name}}</label>
+                            {{/each}}
+                        {{/each}}
+                        <script>
+                            var courseTopic = paramsFilter.topic;
+                            $('.filter-dropdown:eq(0) label').map(function(){
+                                const formatName = $(this).html().replace(/\ /g, '-').toLowerCase();
+                                if(courseTopic == formatName){
+                                    $(this).css({'background-color':'#F4F7F8','color': 'blue'});
+                                }
+                                $(this).bind('click',function(){
+                                    if(formatName == paramsFilter.topic)
+                                        paramsFilter.topic = "";
+                                    else paramsFilter.topic = formatName;
+                                    location.search = encodeQueryData(paramsFilter);
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="filter-item">
+                </div>
+                <div class="filter-item">
+                    <p class="topic-dropdown">Rating</p>
+                    <div class="filter-dropdown">
+                        <label>
+                            <input type="radio" name="rating" value="4.5">
+                            <span class="star-rating"></span>4.5 & up
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="4.0">
+                            <span class="star-rating"></span>4.0 & up
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="3.5">
+                            <span class="star-rating"></span>3.5 & up
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="3.0">
+                            <span class="star-rating"></span>3.0 & up
+                        </label>
+                        <script>
+                            var courseRating = paramsFilter.rating;
+                            $('.filter-dropdown:eq(1) input').map(function(){
+                                if(courseRating == $(this).val()){
+                                    $(this).attr("checked", "checked");
+                                }
+                                $(this).bind('click',function(){
+                                    if($(this).is(':checked'))
+                                        paramsFilter.rating = $(this).val();
+                                    location.search = encodeQueryData(paramsFilter);
+                                });
+                            });
+                            $("label .star-rating:eq(0)").starRating({initialRating: 4.5, strokeColor: '#EB8A2F', strokeWidth: 10, starSize: 15, readOnly: true});
+                            $("label .star-rating:eq(1)").starRating({initialRating: 4, strokeColor: '#EB8A2F', strokeWidth: 10, starSize: 15, readOnly: true});
+                            $("label .star-rating:eq(2)").starRating({initialRating: 3.5, strokeColor: '#EB8A2F', strokeWidth: 10, starSize: 15, readOnly: true});
+                            $("label .star-rating:eq(3)").starRating({initialRating: 3, strokeColor: '#EB8A2F', strokeWidth: 10, starSize: 15, readOnly: true});
+                        </script>
+                    </div>
+                </div>
+                <div class="filter-item">
+                    <p class="topic-dropdown">Video Duration</p>
+                    <div class="filter-dropdown" id="duration-dropdown">
+                        <label><input type="checkbox" name="duration" value="short">0-10 Hours</label>
+                        <label><input type="checkbox" name="duration" value="medium">10-20 Hours</label>
+                        <label><input type="checkbox" name="duration" value="long">20-30 Hours</label>
+                        <label><input type="checkbox" name="duration" value="extra">30+ Hours</label>
+                    </div>
+                    <script>
+                        var courseDuration = paramsFilter.duration;
+                        $('.filter-dropdown:eq(2) input').map(function(){
+                            if(courseDuration.includes($(this).val())){
+                                $(this).attr("checked", "checked");
+                            }
+                            $(this).bind('click',function(){
+                                if($(this).is(':checked') && !courseDuration.includes($(this).val()))
+                                    courseDuration.push($(this).val());
+                                else if(!$(this).is(':checked') && courseDuration.includes($(this).val()))
+                                    courseDuration.splice(courseDuration.indexOf($(this).val()), 1);
+                                paramsFilter.duration = [...courseDuration];                            
+                                location.search = encodeQueryData(paramsFilter);
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="filter-item">
+                    <p class="topic-dropdown">Level</p>
+                    <div class="filter-dropdown" id="level-dropdown">
+                        <label><input type="checkbox" name="level" value="all-levels">All Levels</label>
+                        <label><input type="checkbox" name="level" value="beginner">Beginner</label>
+                        <label><input type="checkbox" name="level" value="intermediate">Intermediate</label>
+                        <label><input type="checkbox" name="level" value="expert">Expert</label>
+                    </div>
+                    <script>
+                        var courseLevel = paramsFilter.level;
+                        $('.filter-dropdown:eq(3) input').map(function(){
+                            if(courseLevel.includes($(this).val())){
+                                $(this).attr("checked", "checked");
+                            }
+                            $(this).bind('click',function(){
+                                if($(this).is(':checked') && !courseLevel.includes($(this).val()))
+                                    courseLevel.push($(this).val());
+                                else if(!$(this).is(':checked') && courseLevel.includes($(this).val()))
+                                    courseLevel.splice(courseLevel.indexOf($(this).val()), 1)
+                                paramsFilter.level = [...courseLevel];
+                                location.search = encodeQueryData(paramsFilter);
+                            });
+                        });
+
+                    </script>
+                </div>
+                <div class="filter-item">
+                    <p class="topic-dropdown">Price</p>
+                    <div class="filter-dropdown">
+                        <label><input type="checkbox" name="price" value="free"><span></span><span>Free</span></label>
+                        <label><input type="checkbox" name="price" value="paid"><span></span><span>Paid</span></label>
+                    </div>
+                    <script>
+                        var coursePrice = paramsFilter.price;
+                        if(coursePrice.includes("free"))
+                            $('input[type="checkbox"][name="price"]:eq(0)').attr("checked", "checked");
+                        if(coursePrice.includes("paid"))
+                            $('input[type="checkbox"][name="price"]:eq(1)').attr("checked", "checked");
+                        $('input[type="checkbox"][name="price"]').bind('click',function() {
+                            if($(this).is(':checked') && !coursePrice.includes($(this).val()))
+                                coursePrice.push($(this).val());
+                            else if(!$(this).is(':checked') && coursePrice.includes($(this).val()))
+                                coursePrice.splice(coursePrice.indexOf($(this).val()), 1)
+                            paramsFilter.price = [...coursePrice]
+                            location.search = encodeQueryData(paramsFilter);
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="category-detail-content">
+                {{#each this.categoryCourses}}
+                    <a href={{this.id}}><div class="course-item">
+                        <img src="../../{{this.image}}" alt="image">
+                        <div class="course-info">
+                            <p class="c-name">{{this.name}}</p>
+                            <p>{{this.headline}}</p>
+                            <p>{{this.instructor.basicInfo.firstName}} {{this.instructor.basicInfo.lastName}}</p>
+                            <p><span>{{this.rating}}</span><span class="star-rating"></span><span>({{this.numReview}})</span></p>
+                            <p><span>{{this.estimateContentLength}} total lengths</span><span><i class="fas fa-circle"></i></span><span>{{this.numLecture}} lectures</span><span><i class="fas fa-circle"></i></span><span>{{this.level.description}}</span></p>
+                            <p><span class="advancement">{{this.advancement.description}}</span><span><i class="fas fa-circle"></i></span><span>{{this.level.description}}</span></p>
+                        </div>
+                        <div class="price">
+                            <p>$ {{this.price}}</p>
+                        </div>
+                        <script>
+                            $(".star-rating").starRating({
+                                initialRating: {{this.rating}},
+                                strokeColor: '#EB8A2F',
+                                strokeWidth: 10,
+                                starSize: 15,
+                                readOnly: true
+                            });
+                        </script>
+                    </div></a>
+                    <hr/>
+                {{/each}}
+                <script>
+                    $("hr:last").css("display","none");
+                    $('.advancement').map(function(index, value){
+                        var advancementVal = value.innerHTML;
+                        if(advancementVal == "BestSeller"){
+                            $(this).css("background-color","#FFE799");
+                        }
+                        else if(advancementVal == "Hot &amp; New"){
+                            $(this).css("background-color","#FF9999");
+                        }
+                        else if(advancementVal == "Highest Rated"){
+                            $(this).css("background-color","#FFC48C");
+                        }
+                        else if(advancementVal == "New"){
+                            $(this).css("background-color","#99DBAA");
+                        }
+                        else if(advancementVal == "Best Choice"){
+                            $(this).css("background-color","#17BCCF");
+                        }
+                    });
+                    $('.course-item').click(function(){
+                        var seoCourseLink = $(this).children('.course-info').children('.c-name').html().toLowerCase().replace(/\ /g, '-');
+                        $(this).parent().attr('href', '/courses/' + seoCourseLink + '/' + $(this).parent().attr('href'))
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="page-path">
+        <button class="pre-page-btn"><i class="fas fa-chevron-left"></i></button>
+        <a href="#" class="flag">1</a>
+        <a href="#" class="flag" style="display: none;">2</a>
+        <a href="#" class="flag" style="display: none;">3</a>
+        <span class="dot-flag" style="display: none;"><i class="fas fa-ellipsis-h"></i></span>
+        <a href="#" class="flag">4</a>
+        <button class="next-page-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var totalPages = Math.ceil({{this.totalItems}} / 5);
+            if(totalPages <= 4){
+                if(totalPages == 1) $('.page-path').css('display','none');
+                else if(totalPages == 2)
+                    $('.flag:last').html('2');
+                else if(totalPages == 3) {
+                    $('.flag:eq(1)').css('display','block');
+                    $('.flag:last').html('3');
+                }
+                else{
+                    $('.flag:eq(1)').css('display','block');
+                    $('.flag:eq(2)').css('display','block');
+                } 
+            }
+            else if(totalPages - {{this.currentPage}} > 2 && totalPages > 4){
+                if({{this.currentPage}} == 1){
+                    $('.flag:eq(1)').css('display','block');
+                    $('.flag:eq(2)').css('display','block');
+                }
+                else{
+                    for(var i = {{this.currentPage}}; i < {{this.currentPage}} + 2; i++)
+                        $('.flag:last').before('<a href="#" class="flag">' + i.toString() + '</a>');
+                    $('.flag:first').html({{this.currentPage}} - 1);
+                }
+                $('.flag:last').before('<span class="dot-flag"><i class="fas fa-ellipsis-h"></i></span>');
+                $('.flag:last').html(totalPages);
+            }
+            else{
+                $('.flag:first').html(totalPages - 3);
+                $('.flag:last').before('<a href="#" class="flag">' + (totalPages - 2).toString() + '</a>');
+                $('.flag:last').before('<a href="#" class="flag">' + (totalPages - 1).toString() + '</a>');
+                $('.flag:last').html(totalPages);
+            }
+            $('.next-page-btn').bind('click',function(){
+                if({{this.currentPage}} == {{this.totalPages}}) return false;
+                paramsFilter.page++;
+                location.search = encodeQueryData(paramsFilter);
+            });
+            $('.pre-page-btn').bind("click",function(){
+                if({{this.currentPage}} == 1) return false;
+                paramsFilter.page--;
+                location.search = encodeQueryData(paramsFilter);
+            });
+            $('.flag').map(function(){
+                if($(this).html() == {{this.currentPage}}) $(this).css('border-bottom','3px solid #0F7C90');
+                $(this).click(function(){
+                    paramsFilter.page = +$(this).html();
+                    location.search = encodeQueryData(paramsFilter);
+                })
+            })
+        });
+	</script>
+</section>

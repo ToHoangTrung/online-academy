@@ -1,0 +1,188 @@
+<section class="user-learning">
+    <div class="fixed-user-info">
+        <div class="user-avatar">
+            <img src="https://dvkhfbm6djrbs.cloudfront.net/5acc7360f161b700446f8349/5c2dd8a2f96d4d000caaeeda/logo_mycourses.png" alt="">
+            <img src="https://graph.facebook.com/539920009811517/picture" alt="">
+            <p>{{this.user.firstName}} {{this.user.lastName}}</p>
+            <p>Học viên</p>
+        </div>
+        <hr/>
+        <div class="user-choice">
+            <a href="/my-courses/learning"><i class="fas fa-chevron-circle-right"></i>Khóa học của tôi</a>
+            <a href="/my-courses/following"><i class="fas fa-chevron-circle-right"></i>Danh sách yêu thích</a>
+            <button><i class="fas fa-user-circle"></i>Thông tin cá nhân</button>
+            <button><i class="fab fa-yelp"></i>Hỗ trợ</button>
+        </div>
+        <script>
+            if(location.href.includes('learning')) $('.user-choice a:first').css({'color': '#E62020', 'font-weight': '500'});
+            else $('.user-choice a:eq(1)').css({'color': '#E62020','font-weight': '500'});
+        </script>
+    </div>
+    <div class="confirm-notification">
+        <div class="headline">
+            <p class="headline-text"></p>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="info">
+        </div>
+        <div class="confirm">
+            <button class="denine-btn">Close</button>
+            <button class="accept-btn">Save Changes</button>
+        </div>
+    </div>
+    <div class="review">
+        <div class="review-content">
+            <p>Đánh giá của bạn</p>
+            <p class="star-rating"></p>
+            <p>Bạn nghĩ sao về khóa học này?</p>
+            <textarea name="" id="" cols="40" rows="5" placeholder="Nhập ý kiến của bạn"></textarea>
+            <button type="button" class="confirm-review-btn">Đánh Giá</button>
+        </div>
+    </div>
+    <div class="user-courses">
+        <div class="course-info">
+            <p class="headline-content"></p>
+            <form action="">
+                <input type="text" placeholder="Tìm kiếm theo tiêu đề">
+                <button class="search-btn">Tìm kiếm</button>
+            </form>
+            <script>
+                var type = "{{this.type}}";
+                if(type == 2) $('.course-info .headline-content').html("Danh sách khóa học đã kích hoạt");
+                else $('.course-info .headline-content').html("Danh sách khóa học đang theo dõi")
+            </script>
+        </div>
+        <div class="basic-course">
+            <div class="basic-content">
+                {{#each this.userCourses}}
+                    <div idx={{this.id}} class="basic-item">
+                        <img class="course-img" src="../../../{{this.image}}" alt={{this.name}}>
+                        <p class="c-name">{{this.name}}</p>
+                        <p class="user-name"><span>{{this.instructor.basicInfo.firstName}} {{this.instructor.basicInfo.lastName}}</span></p>
+                        <p><span>{{this.rating}}</span><span class="star-rating"></span></p>
+                        <div class="nav-btn">
+                            <button class="detail-btn">Detail</button>
+                            <button class="remove-btn">Remove</button>
+                            <button class="review-btn">Review</button>
+                            <button class="learn-btn">Learning</button>
+                        </div>
+                        <script>
+                            $(".basic-course .star-rating").starRating({
+                                initialRating: {{this.rating}},
+                                strokeColor: '#EB8A2F',
+                                strokeWidth: 10,
+                                starSize: 15,
+                                readOnly: true
+                            });
+                        </script>
+                    </div>
+                {{/each}}
+            </div>
+            <script>
+                function setNotification(headline, info, appendclass, type = 1){
+                    $('.confirm-notification').show().addClass(appendclass);
+                    $('.confirm-notification .headline .headline-text').html(headline);
+                    $('.confirm-notification .info').html(info);
+                    $('.close-btn').click(function(){
+                        $('.confirm-notification').hide().removeClass(appendclass)});
+                    $('.denine-btn').click(function(){
+                        $('.confirm-notification').hide().removeClass(appendclass)});
+                    if(type == 2){
+                        $('.accept-btn').hide();
+                    }else{
+                        $('.accept-btn').show();
+                        $('.accept-btn').click(function(){
+                            $('.confirm-notification').hide().removeClass(appendclass)});
+                    }
+                }
+				$('.user-learning .basic-item').map(function(index){
+                    $(this).hover(function(){
+                        $('.nav-btn').eq(index).css('display','flex').show(100);
+                    });
+                    $(this).mouseleave(function(){
+                        $('.nav-btn').eq(index).hide(100);
+                    });
+                    if(type == 2){
+                        $('.detail-btn').hide();
+                        $('.remove-btn').hide();
+                    }else{
+                        $('.review-btn').hide();
+                        $('.learn-btn').hide();
+                    }
+                    let seoCourseLink = $(this).children('.c-name').text().toLowerCase().replace(/\ /g, '-');
+					let courseId = $(this).attr('idx');
+                    $('.detail-btn').eq(index).click(function(){
+                        location.href = '/courses/' + seoCourseLink + '/' + courseId;
+                    });
+                    $('.learn-btn').eq(index).click(function(){
+                        location.href = '/courses/' + seoCourseLink + '/' + courseId + '/lecture/1';
+                    });
+				});
+            </script>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('.remove-btn').click(function(){
+                let courseId = $(this).parent().parent().attr('idx');
+                setNotification('Remove this course?','This course will be removed out of your favorites list', 'notification-danger', type = 1);
+                if($('.accept-btn').click(function(){
+                    $.ajax({
+                        type: "POST",
+                        url: '/my-courses/delete/following-course',
+                        dataType: 'json',
+                        data: {
+                            courseId,
+                        },
+                        success: function (data) { 
+                            setNotification('Deleted Result','This course has been successfully removed out of your favorites list', 'notification-success', type = 2);
+                            $('.basic-item').map(function(){
+                                if($(this).attr('idx') == courseId) $(this).hide();
+                            });
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    });
+                }));
+            });
+
+            $('.review-btn').click(function(){
+                $('.review').show();
+                var courseId = $(this).parent().parent().attr('idx');
+                localStorage.setItem('courseId', courseId);
+            });
+
+            $(".review .star-rating").starRating({
+                initialRating: 0,
+                starShape:	'rounded',
+                emptyColor: '#9198A9',
+                strokeColor: '#EB8A2F',
+                strokeWidth: 0,
+                starSize: 40,
+                callback: function(rating, $el){
+                    $('.confirm-review-btn').click(function(){
+                        var review = $('textarea').val();
+                        $.ajax({
+                            type: "POST",
+                            url: '/my-courses/review/course',
+                            dataType: 'json',
+                            data: {
+                                courseId: localStorage.getItem('courseId'),
+                                review,
+                                rating
+                            },
+                            success: function (data) { 
+                                $('.review').hide();
+                                setNotification('Review Result','Thank you for reviewing this course', 'notification-info', type = 2);
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    });
+                }
+            });
+        })
+    </script>
+</section>

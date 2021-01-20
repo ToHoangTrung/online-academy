@@ -1,0 +1,218 @@
+<section class="payment">
+    {{#unless this.code}}
+    <div class="un-payment">
+        <div class="payment-headline">
+            <p>Thanh toán</p>
+        </div>
+        <div class="payment-type">
+            <div class="payment-type-content">
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="1"/><label for=""></label>       
+                    <img src="https://unica.vn/images/atm-card.svg" alt="">
+                    <div>
+                        <p>Thanh toán bằng thẻ ATM. Internet Banking</p>
+                        <p>Bạn cần có tài khoản Internet Banking để tiến hành thanh toán</p>
+                        <p>Hỗ trợ tất cả các ngân hàng tại Việt Nam: VCB, ACB, Sacombank, BIDV,...</p>
+                    </div>
+                </div>
+
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="2">
+                    <img src="https://unica.vn/images/visa-card.svg" alt="">
+                    <div>
+                        <p>Thanh toán bằng thẻ quốc tế</p>
+                        <p>Hỗ trợ Creadit và Debit</p>
+                        <p>Bạn sẽ được chuyển tới cổng OnePay để thanh toán</p>
+                    </div>
+                </div>
+                
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="3">
+                    <img src="https://unica.vn/images/logo-momo.png" alt="">
+                    <div>
+                        <p>Thanh toán bằng ví điện tử MoMo</p>
+                        <p>Quý khách vui lòng cài app MoMo trước khi chọn hình thức này để thuận tiện cho việc thanh toán</p>
+                    </div>
+                </div>
+                
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="4">
+                    <img src="https://unica.vn/images/viettelpay_image.png" alt="">
+                    <div>
+                        <p>Thanh toán bằng cổng ViettelPay</p>
+                        <p>Bạn sẽ được chuyển tới cổng ViettelPay để thanh toán</p>
+                    </div>
+                </div>
+                
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="5">
+                    <img src="https://merchant.vnpay.vn/Styles/images/logo.png" alt="">
+                    <div>
+                        <p>Thanh toán bằng cổng VnPay</p>
+                        <p>Bạn sẽ được chuyển tới cổng VnPay để thanh toán</p>
+                    </div>
+                </div>
+                
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="6">
+                    <img src="https://unica.vn/images/airpay.png" alt="">
+                    <div>
+                        <p>Thanh toán bằng cổng AirPay</p>
+                        <p>Bạn sẽ được chuyển tới cổng AirPay để thanh toán</p>
+                    </div>
+                </div>
+                
+                <div class="payment-type-item">
+                    <input type="radio" name="#" value="7">
+                    <img src="https://unica.vn/images/credit-card.svg" alt="">
+                    <div>
+                        <p>Chuyển khoản ngân hàng</p>
+                        <p>Ngay sau khi nhận được thanh toán, Unica sẽ gửi mã kích hoạt vào email của bạn</p>
+                        <p>Vui lòng <strong>chuyển khoản trong vòng 24h để giữ ưu đãi 10%</strong> thanh toán online!</p>
+                    </div>
+                </div>
+                
+            </div>
+            <button type="submit" class="payment-btn">THANH TOÁN</button>
+        </div>
+        <div class="price-summary">
+            <div class="num-course summary">
+                <p>Đơn hàng ({{this.userUnPaymentInvoice.courses.length}} khóa học)</p>
+                <a href="#"><i class="far fa-edit"></i>Sửa</a>
+            </div>
+            <div class="course-list">
+                {{#each this.userUnPaymentInvoice.courses}}
+                    <div class="course-list-item">
+                        <img src="../../../{{this.image}}" alt="">
+                        <p class="course-name">{{this.name}}</p>
+                        <div class="price">
+                            <p class="price">{{this.price}} $</p>
+                            <p>{{this.prePrice}} $</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <script>
+                var totalPrice = 0;
+                var totalPrePrice = 0;
+                localStorage.setItem('invoiceId',{{this.userUnPaymentInvoice.id}});
+                $('.course-list-item div').map(function(){
+                    totalPrice += +$(this).children('p:first').html().replace('$','');
+                    totalPrePrice += +$(this).children('p:last').html().replace('$','');
+                });
+            </script>
+            <div class="bonus-coupon summary">
+                <p>{{this.userUnPaymentInvoice.coupon.name}}</p>
+                <p></p>
+            </div>
+            <script>
+                var percentDiscount = {{this.userUnPaymentInvoice.coupon.percentDiscount}}
+                var amountDiscount = {{this.userUnPaymentInvoice.coupon.amountDiscount}}
+                if(percentDiscount > 0){
+                    $('.bonus-coupon p:last').html(totalPrice * percentDiscount / 100 + " $");
+                }
+                else if(amountDiscount > 0){
+                    $('.bonus-coupon p:last').html(amountDiscount + " $");    
+                }                   
+                else {
+                    $('.bonus-coupon').css('display','none');
+                }
+
+            </script>
+            <div class="total-price summary">
+                <p>Thành tiền</p>
+                <p></p>
+            </div>
+            <script>
+                var sumPrice = totalPrice - +($('.bonus-coupon p:last').html().replace('$',''));
+                $('.total-price p:last').html(sumPrice + " $");
+            </script>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $('.payment-btn').click(function(){
+                    var paymentType;
+                    $('.payment-type-item input').map(function(){
+                        if($(this).prop("checked") == true){
+                            paymentType = $(this).val();
+                        }
+                    });      
+                    if(paymentType == 5){
+                        var postData = {
+                            amount: Math.ceil(sumPrice * 23.07593) * 1000,
+                            locale: 'vn',
+                            orderType: 'billpayment',
+                            bankCode: '',
+                            orderInfo: 'Thanh toan don hang VNPAY'
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: '/cart/payment/create_payment_url',
+                            dataType: 'json',
+                            data: postData,
+                            success: function (data) {
+                                if (data.code === '00') {
+                                    if(window.vnpay)
+                                        vnpay.open({width: 768, height: 600, url: data.vnpLink});
+                                    else
+                                        location.href= data.vnpLink;
+                                    return false;   
+                                } else
+                                    alert(data.Message);
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    }
+                    return false;
+                });
+            })
+        </script>
+    </div>
+    {{else}}
+        <div class="payment-result">
+            <div class="payment-success template">
+                <img src="https://image.shutterstock.com/image-vector/thank-you-colorful-vector-mixed-260nw-1623314314.jpg" alt="">
+                <p class="result-text">Bạn đã đăng ký và thanh toán khóa học thành công <br/> Thông tin chi tiết sẽ hiển thị ở phần lịch sử đơn hàng</p>
+                <button type="button">Nhấn vào đây để vào trang danh sách khóa học của bạn</button>
+            </div>
+            <div class="payment-fail template">
+                <img src="https://previews.123rf.com/images/goodstocker/goodstocker1807/goodstocker180700304/114773249-nerdy-guy-with-disconnected-cable-in-his-hands-text-warning-message-sorry-something-went-wrong-oops-.jpg" alt="">
+                <p>Oops, có chuyện gì đó không ổn đã xảy ra, chúng tôi sẽ điều tra nó ngay lập tức <br/> Nếu tài khoản bạn bị trừ tiền, hãy báo cho chúng tôi biết</p>
+                <button>Nhấn vào đây để vào trang hỗ trợ</button>
+            </div>
+            <script>
+                $('.payment-result .payment-success button').click(function(){
+                    location.href = "/my-courses/learning";
+                })
+            </script>
+        </div>
+        <script>
+            if({{this.code}} === 0) {
+                $.ajax({
+                    type: "POST",
+                    url: '/cart/payment/payment_success',
+                    dataType: 'json',
+                    data: {
+                        type: 5,
+                        orderDate: Date(),
+                        invoiceId: localStorage.getItem('invoiceId')
+                    },
+                    success: function (data) {
+                        if (data.code === '00') {
+                            $('.payment-success').css('display','block');
+                        } else
+                            $('.payment-fail').css('display','block');
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+            }
+            else{
+                $('.payment-fail').css('display','none');
+            }
+        </script>
+    {{/unless}}
+</section>

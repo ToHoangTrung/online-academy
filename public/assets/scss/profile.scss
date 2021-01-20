@@ -1,0 +1,125 @@
+.profile {
+  width: 80%;
+  max-width: 1000px;
+  height: 100vh;
+  margin: 20px auto 100px;
+
+  .container {
+    display: grid;
+    grid-template-columns: 80% 20%;
+
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  .info {
+    margin: 0 20px;
+
+    .row {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .name {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      .form-control {
+        input {
+        }
+      }
+    }
+
+    .security {
+      width: 50%;
+
+      .form-control {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .avatar {
+
+    .img {
+      width: 250px;
+      position: relative;
+
+      .inputLabel {
+        label {
+          img {
+            width: 250px;
+            height: 250px;
+            border-radius: 5px;
+            object-fit: cover;
+            &:hover {
+              cursor: pointer;
+              filter: brightness(80%);
+            }
+          }
+          width: 100%;
+          color: white;
+          background-color: #3A589E;
+          text-align: center;
+          border-radius: 3px;
+
+          &:hover {
+            background-color: #2b4272;
+          }
+        }
+      }
+    }
+  }
+
+
+  .form-control {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    label {
+      margin: 5px 0;
+      font-weight: 300;
+      color: #333D49;
+    }
+
+    input, textarea {
+      border-radius: 5px;
+      height: 35px;
+      width: 100%;
+      outline: none;
+      padding: 10px;
+      border: 1px solid #A3AFBF;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    input[type=submit] {
+      background-color: #4d84e2;
+      color: white;
+      width: 100px;
+      height: 35px;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      justify-self: flex-end;
+      align-self: flex-end;
+      &:hover {
+        cursor: pointer;
+        background-color: #3862a7;
+      }
+    }
+
+    input:read-only {
+      background-color: #e5e5e5;
+    }
+  }
+
+}

@@ -1,0 +1,166 @@
+<nav class="nav">
+    <div class="left-sight">
+        <a href="/"><img src="https://assets.data.world/assets/logo-horiz-white.4ce1e77312620581d5a1c421c845b488.svg"
+                         alt=""></a>
+    </div>
+    <div class="center">
+        <i class="fas fa-search"></i>
+        <form action="">
+            <input type="text" placeholder="Search for anything"
+                   onfocus="$(this).parent().parent().css('filter', 'brightness(120%)')"
+                   onfocusout="$(this).parent().parent().css('filter', 'brightness(100%)')">
+        </form>
+    </div>
+    <div class="right-sight">
+        {{#unless this.user}}
+            <div class="before-sign-in">
+                <div class="my-teach">
+                    <a href="#" class="nav-link">Teach on Udemy</a>
+                    <div class="my-teach-content">
+                        <p>Turn what you know into an opportunity and reach millions around the world.</p>
+                        <a href="#" class="content-btn nav-link">Learn More</a>
+                    </div>
+                </div>
+                <a href="auth" class="nav-link">Sign Up</a>
+                <a href="auth" class="nav-link">Sign In</a>
+            </div>
+        {{else}}
+            <script>
+                var sumPrice = 0;
+                var sumPrePrice = 0;
+                var i = 0;
+            </script>
+            <div class="after-sign-in">
+                <a href="/instructor" class="nav-link">Instructor</a>
+                <div class="my-learning">
+                    <a href="#" class="nav-link">My learning</a>
+                    <div class="my-learning-dropdown-content">
+                        {{#if this.userCourses}}
+                            {{#each this.userCourses}}
+                                <a href="#">
+                                    <div class="my-course-item">
+                                        <img src="../../{{this.image}}" alt=""/>
+                                        <p>{{this.name}}</p>
+                                        <p class="start-learning">Start Learning</p>
+                                        <progress max='100' value='0'></progress>
+                                    </div>
+                                </a>
+                                <hr/>
+                            {{/each}}
+                            <a href="/my-courses/learning" class="content-btn nav-link">Go To My Learning</a>
+                        {{else}}
+                            <div class="my-empty-course">
+                                <p>Start learning from over 130,000 courses today.</p>
+                                <a href="#" class="content-btn nav-link">Browse Now</a>
+                            </div>
+                        {{/if}}
+                        <script>
+                        </script>
+                    </div>
+                </div>
+                <div class="my-cart">
+                    <div class="amount-in-cart">{{this.user.cart.length}}</div>
+                    <a href="#" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
+                    <div class="my-cart-content">
+                        {{#if this.userUnPaymentInvoice}}
+                            {{#each this.userUnPaymentInvoice.courses}}
+                                <a href="#">
+                                    <div class="my-cart-item">
+                                        <img src="../../{{this.image}}" alt=""/>
+                                        <p>{{this.name}}</p>
+                                        <p>{{this.author}}</p>
+                                        <p><span>$ {{this.price}}&nbsp;&nbsp;</span><span>$ {{this.prePrice}}</span></p>
+                                    </div>
+                                </a>
+                                <hr/>
+                                <script>
+                                    sumPrice += {{ this.price }}
+                                            sumPrePrice += {{ this.prePrice }}
+                                </script>
+                            {{/each}}
+                            <div class="my-cart-sum">
+                                <p><span class="sum-price">$</span>&nbsp;&nbsp;<span class="sum-pre-price">$</span>
+                                </p></span>
+                                <a href="/cart" class="content-btn nav-link">Go To Cart</a>
+                            </div>
+                            <script>
+                                $(".sum-price:first").html("$" + sumPrice);
+                                $(".sum-pre-price:first").html("$" + sumPrePrice);
+                            </script>
+                        {{else}}
+                            <div class="my-empty-cart">
+                                <p>Your Cart Is Empty</p>
+                                <a href="#" class="nav-link">Keep Shopping</a>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="my-notification">
+                    <div class="amount-of-notification">1</div>
+                    <a href="#" class="nav-link"><i class="fas fa-bell"></i></a>
+                    <div class="my-notification-content">
+                        <div class="my-introduce-notification">
+                            <span>Notification</span>
+                            <a href="#">Settings</a>
+                            <button><a href="/instructor">Instructor</a></button>
+                            <button>Student</button>
+                        </div>
+                        <div class="my-notification-item">
+
+                        </div>
+                        <div class="my-empty-notification">
+                            <p>No Notification</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-profile">
+                    <a href="#" class="nav-link"><i class="far fa-user"></i></a>
+                    <div class="my-profile-content">
+                        <a href="/user/me">
+                            <div class="user-logo">
+                                <img src="../../{{user.image}}" alt="">
+                                <div class="text">
+                                    <span>{{this.user.firstName}} {{this.user.lastName}}</span>
+                                    <p>{{this.user.email}}</p>
+                                </div>
+                            </div>
+                        </a>
+                        <hr/>
+                        <div>
+                            <a href="/my-courses/learning">My Learning</a>
+                            <a href="/cart">My Cart</a>
+                            <a href="#">Instructor Dashboard</a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <a href="#">Notifications</a>
+                            <a href="#">Messages</a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <a href="#">Account Settings</a>
+                            <a href="#">Payment Methods</a>
+                            <a href="#">Udemy Credits</a>
+                            <a href="#">Purchase History</a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <a href="#">Public Profile</a>
+                            <a href="#">Edit Profile</a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <a href="#">Help</a>
+                            <a href="/logout" id="log-out-btn">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/unless}}
+    </div>
+    <script>
+        $("#log-out-btn").click(function () {
+            location.reload();
+        });
+    </script>
+</nav>

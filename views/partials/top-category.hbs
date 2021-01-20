@@ -1,0 +1,37 @@
+<section class="top-category">
+    <p>Category &nbsp;<i class="fas fa-chevron-down"></i></p>
+    <div class="category-content">
+        {{#each this.categories}}
+            <div class="category-item">
+                <a href={{this.id}} class="category-link"><i class="{{this.logo}}"></i>{{this.name}}</a>
+                <div class="sub-category-content" id="sub-category-content">
+                    {{#each this.subCategories}}
+                        <a href="#" class="sub-category-link"><i class="fas fa-long-arrow-alt-right"></i>{{this.name}}</a>
+                    {{/each}}
+                </div>
+            </div>
+        {{/each}}
+        <script>
+            $('.top-category .category-link').map(function(index){
+                var seoCategoryLink = $(this).text().toLowerCase().replace(/\ /g, '-');
+                var categoryId = $(this).attr('href');
+                var params = new URLSearchParams({
+                    id: $(this).attr('href'),
+                });
+                $(this).attr('href', '/collection/' + seoCategoryLink + '/?' + params);
+                $('.top-category .sub-category-content:eq(' + index + ')' +' .sub-category-link').map(function(){
+                    var seoSubCategoryLink = $(this).text().toLowerCase().replace(/\ /g, '-');
+                    var params = new URLSearchParams({
+                        id: categoryId,
+                        topic: seoSubCategoryLink
+                    });
+                    $(this).attr('href', '/collection/' + seoCategoryLink + '/?' + params);
+                })
+            });
+        </script>
+	</div>
+    <script>
+        $('.top-category .category-content').width(localStorage.getItem('categoryWidth'));
+        $('.top-category .sub-category-content').height($('.top-category .category-content').height());
+    </script>
+</section>

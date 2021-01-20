@@ -1,0 +1,313 @@
+<div class="course-detail">
+	<div class="wrapper">
+		<div class="basic-info-wrapper">
+			<div class="basic-info">
+				<img src="../../{{course.image}}" alt="">
+				<ul>
+					<li>Development<i class="fas fa-chevron-right"></i></li>
+					<li>Data Science<i class="fas fa-chevron-right"></i></li>
+					<li>Python</li>
+				</ul>
+				<p class="name">{{course.name}}</p>
+				<p class="headline">{{course.headline}}</p>
+				<ul>
+					<li>
+						<button class="best-seller-btn">{{course.advancement.description}}</button>
+
+					</li>
+					<li class="rating">{{course.rating}}
+						<span class="star-rating"></span>
+					</li>
+					<li>({{course.numReview}} ratings)</li>
+					<li>{{course.numStudentEnroll}} students</li>
+				</ul>
+				<span>Created by <a id="instructorLink"
+				                    href="">{{course.instructor.basicInfo.firstName}} {{course.instructor.basicInfo.lastName}}</a></span>
+
+				<ul>
+					<li><i class="fab fa-yahoo"></i>Last updated {{course.updatedDate}}</li>
+					<li><i class="fas fa-globe"></i>{{course.language}}</li>
+				</ul>
+				<ul>
+					<li>
+						<button class="more">Wishlist<i class="fas fa-heart"></i></button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="course-content-wrapper">
+			<h2>Course content</h2>
+			<div class="course-content">
+				{{#each course.chapters }}
+					<div class="chapter">
+						<div class="header">
+							<div class="title">
+								<i class="fas fa-angle-right"></i>
+								<span>{{this.title}}</span>
+							</div>
+							<div class="time">
+								<span>{{this.sections.length}} lesions</span>
+								<!--								<i class="fas fa-circle"></i>-->
+								<span></span>
+							</div>
+						</div>
+						<div class="chapter-content">
+							{{#each sections}}
+								<div class="section">
+									<div class="title">
+										<i class="fas fa-play-circle"></i>
+										<span>{{this.title}}</span>
+									</div>
+									<div class="time">
+										<!--										<span>2 hours</span>-->
+									</div>
+								</div>
+							{{/each}}
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+		<div class="course-description-wrapper">
+			<div class="course-description" id="course-description">
+				<script>
+					const innerHtml = "{{course.description}}";
+					console.log(innerHtml);
+					$('.course-description').html('{{course.description}}');
+					// document.getElementById('course-description').innerHTML = `<a href="/">home</a>`;
+				</script>
+			</div>
+		</div>
+		<div class="instructor-info-wrapper">
+			<h2>Instructor</h2>
+			<div class="instructor-info">
+				<div class="info">
+					<h3 class="name">{{course.instructor.basicInfo.firstName}} {{course.instructor.basicInfo.lastName}}</h3>
+					<span class="short-description">{{course.instructor.shortDescription}}</span>
+					<div class="review-info">
+						<img src="../../{{course.instructor.basicInfo.image}}"
+						     alt="">
+						<div class="detail-info-area">
+							<div class="detail">
+								<div class="icon">
+									<i class="fas fa-star"></i>
+								</div>
+								<span>{{course.instructor.rating}} Instructor Rating</span>
+							</div>
+							<div class="detail">
+								<div class="icon">
+									<i class="fas fa-award"></i>
+								</div>
+								<span>{{course.instructor.numReview}} Reviews</span>
+							</div>
+							<div class="detail">
+								<div class="icon">
+									<i class="fas fa-user-friends"></i>
+								</div>
+								<span>{{course.instructor.numStudentEnroll}} Students</span>
+							</div>
+							<div class="detail">
+								<div class="icon">
+									<i class="fas fa-play-circle"></i>
+								</div>
+								<span>{{course.instructor.numCourse}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p>
+					&nbsp;{{course.instructor.description}}
+				</p>
+			</div>
+		</div>
+		<div class="frequently-bought-wrapper">
+			<h2>Related courses</h2>
+			<div class="frequently-bought">
+				{{#each relatedCourses }}
+					<div class="course">
+						<img src="../../{{this.image}}"
+						     alt="">
+						<div class="info">
+							<h2>{{this.name}}</h2>
+							<div class="other-info">
+								<button class="best-seller-btn">{{this.advancement.description}}</button>
+								<!--								<i class="fas fa-circle"></i>-->
+								<!--								<span>44.5 total hours</span>-->
+								<!--								<i class="fas fa-circle"></i>-->
+								<span>{{updatedDate}}</span>
+							</div>
+						</div>
+						<div class="rating">
+							<span>{{this.rating}}</span>
+							<i class="fas fa-star"></i>
+						</div>
+						<div class="number-of-member">
+							<i class="fas fa-users"></i>
+							<span>{{this.numStudentEnroll}}</span>
+						</div>
+						<div class="cost">
+							<h4>{{this.price}} {{this.concurrency}}</h4>
+							<span>{{this.prePrice}}  {{this.concurrency}}</span>
+						</div>
+						<!--						<div class="wish">-->
+						<!--							<i class="fas fa-heart"></i>-->
+						<!--						</div>-->
+					</div>
+				{{/each}}
+			</div>
+		</div>
+		<div class="student-feedback-wrapper">
+			<h2>Student feedback</h2>
+			<div class="student-feedback">
+				<div class="rating-area">
+					<div class="number-area">
+						<span class="number">{{course.rating}}</span>
+						<div class="rating">
+							<span class="star-rating"></span>
+							<script>
+								const courseRating = '{{course.rating}}'
+								$(".star-rating").starRating({
+									initialRating: courseRating,
+									strokeColor: '#EB8A2F',
+									strokeWidth: 10,
+									starSize: 15,
+									readOnly: true
+								});
+							</script>
+						</div>
+						<div class="total">
+							<i class="fas fa-user"></i>
+							<span>Total {{course.numReview}} reviews</span>
+						</div>
+					</div>
+					<div class="processes">
+						<div class="process">
+							<span>5</span>
+							<div class="bar bar_5">
+							</div>
+						</div>
+						<div class="process">
+							<span>4</span>
+							<div class="bar bar_4">
+							</div>
+						</div>
+						<div class="process">
+							<span>3</span>
+							<div class="bar bar_3">
+
+							</div>
+						</div>
+						<div class="process">
+							<span>2</span>
+							<div class="bar bar_2">
+							</div>
+						</div>
+						<div class="process">
+							<span>1</span>
+							<div class="bar bar_1">
+							</div>
+						</div>
+						<script>
+							const reviewPercentage = '{{course.reviewPercentage}}'
+							const percentages = reviewPercentage.split(',');
+							for (let i = 0; i < 5; i++) {
+								console.log(percentages[i])
+								$(`.bar_${i + 1}`).css('width', `${percentages[i]}%`);
+							}
+						</script>
+					</div>
+				</div>
+				<div class="review-area">
+
+				</div>
+			</div>
+		</div>
+		<div class="review-wrapper">
+			<h2>Reviews</h2>
+			<div class="reviews">
+				<div class="search-area">
+					<!--					<form action="">-->
+					<!--						<label for="">Leave a review: </label>-->
+					<!--						<input type="text" name="content">-->
+					<!--					</form>-->
+				</div>
+				{{#each course.reviews}}
+					<div class="review">
+						<img src="../../{{this.user.image}}"
+						     alt="">
+						<div class="main">
+							<div class="name">
+								<h2>{{this.user.firstName}} {{this.user.lastName}}</h2>
+								<div class="like-dislike">
+									<i class="fas fa-thumbs-up"></i>
+									<i class="fas fa-thumbs-down"></i>
+								</div>
+							</div>
+							<div class="rating">
+								<div class="stars">
+									<span class="star-rating"></span>
+								</div>
+								<span>{{this.updatedDate}}</span>
+							</div>
+							<p>{{this.content}}</p>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+
+	</div>
+	<div class="buy-info">
+		<img src="https://1.bp.blogspot.com/-Lgl4flwEc1k/XnM-GUJPJ2I/AAAAAAAAALo/BmVVDI8BLuEhTzrGy8Cw0wz2RydH_HEdgCPcBGAYYCw/s1600/IMG_20200318_214527_250.jpg"
+		     alt="">
+		<div>
+			<p class="price">$ {{course.price}}</p>
+			<button class="add-to-cart">Add to cart</button>
+			<button class="buy-now">Buy now</button>
+			<p class="guarantee">30-Day Money-Back Guarantee</p>
+			<p class="include">This course includes:</p>
+			<ul>
+				{{#each course.incentive}}
+				<li>{{this.name}}{{/each}}</li>
+			</ul>
+			<form action="">
+				<label>
+					<input type="text" placeholder="Enter coupon">
+				</label>
+				<input type="submit" class="coupon-apply-btn" value="Enter"/>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		$('.add-to-cart').click(function () {
+			$.ajax({
+				type: "POST",
+				url: '/cart/create-new/invoice',
+				dataType: 'json',
+				data: {
+					courseId: "{{this.course.id}}"
+				},
+				success: function (invoice) {
+					alert("Add this course to art Successfully");
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+		})
+	</script>
+	<script>
+		$('.best-seller-btn').each((index, object) => {
+			const text = $(object).text();
+			const colorMap = {
+				Bes: '#FFE799',
+				Hot: '#FF9999',
+				Hig: '#FFC48C',
+				New: '#A8F1BB',
+				Res: '#17BCCF'
+			}
+			$(object).css('background-color', `${colorMap[text.substring(0, 3)]}`);
+		})
+	</script>
+</div>

@@ -1,0 +1,59 @@
+.add-course {
+  width: 80%;
+  margin: 20px auto; }
+  .add-course .info {
+    width: 60%; }
+    .add-course .info .imageInputLabel:hover {
+      cursor: pointer;
+      filter: brightness(60%); }
+    .add-course .info .image-wrapper {
+      width: 350px;
+      height: 200px;
+      background-color: gainsboro;
+      border-radius: 4px; }
+      .add-course .info .image-wrapper img {
+        border-radius: 4px;
+        object-fit: cover;
+        width: 350px;
+        height: 200px; }
+  .add-course .form-group {
+    margin: 10px 0px;
+    padding: 0px 0px 30px;
+    border-bottom: 1px solid #e3e3e3; }
+    .add-course .form-group:last-child {
+      border-bottom: none; }
+    .add-course .form-group .form-control {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%; }
+      .add-course .form-group .form-control label {
+        margin: 5px 0;
+        font-weight: 300;
+        color: #333D49; }
+      .add-course .form-group .form-control input, .add-course .form-group .form-control textarea, .add-course .form-group .form-control select {
+        border-radius: 5px;
+        height: 35px;
+        width: 100%;
+        outline: none;
+        padding: 10px;
+        border: 1px solid #A3AFBF; }
+      .add-course .form-group .form-control textarea {
+        height: 100px; }
+    .add-course .form-group input[type=submit] {
+      background-color: #4d84e2;
+      color: white;
+      width: 100px;
+      height: 35px;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      justify-self: flex-end;
+      align-self: flex-end;
+      border-radius: 3px; }
+      .add-course .form-group input[type=submit]:hover {
+        cursor: pointer;
+        background-color: #3862a7; }
+    .add-course .form-group input:read-only {
+      background-color: #e5e5e5; }

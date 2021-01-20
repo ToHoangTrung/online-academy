@@ -1,0 +1,1110 @@
+<section class="admin">
+    {{#unless this.user}}
+        <div class="un-login">
+            <div class="un-login-content">
+                <div class="logo">
+                    <img src="https://assets.data.world/assets/logo-horiz-white.4ce1e77312620581d5a1c421c845b488.svg" alt="">
+                </div>
+                <div class="login">
+                    <p class="headline-login" style="padding-bottom: 20px;">Sign in to start your session</p>
+                    <div class="invalid">
+                        <p><i class="fas fa-times"></i></p>
+                        <p>The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.</p>
+                    </div>
+                    <form action="/admin/check/admin" method="POST">
+                        <input type="text" placeholder="Username" id="username">
+                        <input type="password" placeholder="Password" id="password">
+                        <a href="#" class="forgot-password">Forgot your password ?</a>
+                        <button type="button">Sign in</button>
+                    </form>
+                </div>
+            </div>
+            <script>
+                $('.un-login form button').click(function(){
+                    let submitUrl = $('.un-login form').attr("action");
+                    let userName = $('#username').val();
+                    let passWord = $('#password').val();
+                    $.ajax({
+                        type: "POST",
+                        url: submitUrl,
+                        dataType: 'json',
+                        data: {
+                            userName: userName,
+                            passWord: passWord
+                        },
+                        success: function (data) {
+                            if(data.code == '01') {
+                                $('.invalid').css('display','flex');
+                                $('#password').val('');
+                                $('#username').val('');
+                                $('#username').css('border','1px solid red').focus();
+                            }else{
+                                location.href = '/admin';
+                            }
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    });
+                })
+            </script>
+        </div>
+    {{else}}
+        <div class="confirm-notification">
+            <div class="headline">
+                <p class="headline-text"></p>
+                <button class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="info">
+            </div>
+            <div class="confirm">
+                <button class="denine-btn">Close</button>
+                <button class="accept-btn">Save Changes</button>
+            </div>
+        </div>
+        <div class="login">
+            <script>
+                function formatStatus(){
+                    $('.i-status').map(function(){
+                        if($(this).html() == '1') {
+                            $(this).html('Enabled');
+                        }
+                        else $(this).html('Disabled');
+                    });
+                }
+                function setNotification(headline, info, appendclass, type = 1){
+                    $('.confirm-notification').show().addClass(appendclass);
+                    $('.confirm-notification .headline .headline-text').html(headline);
+                    $('.confirm-notification .info').html(info);
+                    $('.close-btn').click(function(){
+                        $('.confirm-notification').hide().removeClass(appendclass)});
+                    $('.denine-btn').click(function(){
+                        $('.confirm-notification').hide().removeClass(appendclass)});
+                    if(type == 2){
+                        $('.accept-btn').hide();
+                    }else{
+                        $('.accept-btn').show();
+                        $('.accept-btn').click(function(){
+                            $('.confirm-notification').hide().removeClass(appendclass)});
+                    }
+                }
+            </script>
+            <div class="nav">
+                <div class="logout">
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+            <div class="fixed-side-bar">
+                <div class="logo">
+                    <img src="https://assets.data.world/assets/logo-horiz-white.4ce1e77312620581d5a1c421c845b488.svg" alt="">
+                </div>
+                <div class="admin-info">
+                    <img src="https://banner2.cleanpng.com/20180315/vrq/kisspng-logo-lion-shutterstock-red-gradient-lionhead-5aab05d93512d0.9761940315211575932174.jpg" alt="">
+                    <p>{{this.user.firstName}} {{this.user.lastName}}</p>
+                </div>
+            </div>
+            <div class="dashboard">
+                <div class="module-introduce">
+                    <div class="module-dashboard">
+                        <p class="dashboard-headline">DASHBOARD</p>
+                        <div class="module-dashboard-content">
+                            <div class="module-item">
+                                <div class="logo"  style="background-color: #00C0EF;">
+                                    <p><i class="far fa-list-alt"></i></p>
+                                </div>
+                                <div class="text">
+                                    <p>CATEGORIES MANAGEMENT</p>
+                                    <P>50</P>
+                                </div>
+                            </div>
+                            <div class="module-item" >
+                                <div class="logo" style="background-color: #00A65A;">
+                                    <p><i class="fab fa-leanpub"></i></p>
+                                </div>
+                                <div class="text">
+                                    <p>COURSES MANAGEMENT</p>
+                                    <P>161.234</P>
+                                </div>
+                            </div>
+                            <div class="module-item">
+                                <div class="logo" style="background-color: #F39C12;">
+                                    <p><i class="fas fa-users"></i></p>
+                                </div>
+                                <div class="text">
+                                    <p>USERS MANAGEMENT</p>
+                                    <P>78.234</P>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-dashboard ds-dashboard">
+                        <div class="category-dashboard-nav dash-nav">
+                            <p class="dashboard-headline">Categories Collection</p>
+                            <select class="category-type-target">
+                                <option value="category" selected="selected">Category Domain</option>
+                                <option value="sub-category" >Sub Category Domain</option>
+                            </select>
+                            <div class="add-btn">
+                                <button type="button">Add New Category</button>
+                            </div>
+                        </div>
+                        <div class="add-category add-cate">
+                            <form action="/admin/add/category">
+                                <div class="file">
+                                    <label for="">Image Url<input type="file" id="category-img"/></label>
+                                </div>
+                                <label for="">Name <input type="text" placeholder="name" id="category-name"></label>
+                                <label for="">Logo <input type="text" placeholder="logo" id="category-logo"></label>
+                                <button type="button">Add</button>
+                            </form>
+                        </div>
+                        <div class="add-sub-category add-cate">
+                            <form action="/admin/add/sub-category" method="">
+                                <label for="">Category
+                                    <select id="category-id">
+                                        {{#each this.categories}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </label>
+                                <label for="">Name <input type="text" placeholder="name" id="sub-category-name"></label>
+                                <button type="button">Add</button>
+                            </form>
+                        </div>
+                        <div class="category-dashboard-content">
+                            <table class="template-table category-table">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Category Name</th>
+                                    <th>Number of Courses</th>
+                                    <th>Number of Sub Category</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Updated Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                {{#each this.categories}}
+                                    <tr class="main-category-item">
+                                        <td class="i-id">{{this.id}}</td>
+                                        <td>{{this.name}}</td>
+                                        <td>1200</td>
+                                        <td>8</td>
+                                        <td class="i-status">{{this.status}}</td>
+                                        <td>1/1/2021</td>
+                                        <td>1/1/2021</td>
+                                        <td>
+                                            <button class="info-btn">Info</button>
+                                            <button class="edit-btn">Edit</button>
+                                            <button class="delete-btn">Disable</button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </table>    
+                            <table class="template-table sub-category-table" style="display: none;">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Sub Category Name</th>
+                                    <th>Number of Courses</th>
+                                    <th>Number of Category</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Updated Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                {{#each this.categories}}
+                                    {{#each this.subCategories}}
+                                        <tr class="main-category-item">
+                                            <td class="i-id">{{this.id}}</td>
+                                            <td>{{this.name}}</td>
+                                            <td>1200</td>
+                                            <td>8</td>
+                                            <td class="i-status">{{this.status}}</td>
+                                            <td>1/1/2021</td>
+                                            <td>1/1/2021</td>
+                                            <td>
+                                                <button class="info-btn">Info</button>
+                                                <button class="edit-btn">Edit</button>
+                                                <button class="delete-btn">Disable</button>
+                                            </td>
+                                        </tr>
+                                    {{/each}}
+                                {{/each}}
+                            </table>
+                            <script>
+
+                                $('.category-dashboard .add-category button').click(function(){
+                                    const submitUrl = $('.category-dashboard .add-category form').attr('action');
+                                    let name = $('#category-name').val();
+                                    let logo = $('#category-logo').val();
+                                    let img = $('#category-img').val();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: submitUrl,
+                                        dataType: 'json',
+                                        data: {
+                                            categoryName: name,
+                                            categoryLogo: logo,
+                                            categoryImg: img
+                                        },
+                                        success: function (category) {
+                                            setNotification('Add Category', 'Add A New Category Successfully','notification-success', type = 2);
+                                            $('.category-table').append('<tr class="main-category-item"><td class="i-id">' + category.id + '</td><td>' + category.name + '</td><td>1200</td><td>8</td><td class="i-status">' + category.status + '</td><td>1/1/2021</td><td>1/1/2021</td><td><button class="info-btn">Info</button><button class="edit-btn">Edit</button><button class="delete-btn">Disable</button></td></tr>');
+                                            //formatStatus();
+                                        },
+                                        error: function(error){
+                                            console.log(error);
+                                        }
+                                    });
+                                });
+                                //formatStatus();
+                                $('.category-dashboard .add-sub-category button').click(function(){
+                                    const submitUrl = $('.category-dashboard .add-sub-category form').attr('action');
+                                    let name = $('#sub-category-name').val();
+                                    let cateId = $('#category-id').val();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: submitUrl,
+                                        dataType: 'json',
+                                        data: {
+                                            subCategoryName: name,
+                                            categoryId: cateId,
+                                        },
+                                        success: function (subCategory) {
+                                            setNotification('Add Sub Category', 'Add A New Sub Category Successfully','notification-success', type = 2);
+                                            $('.sub-category-table').append('<tr class="main-category-item"><td class="i-id">' + subCategory.id +'</td><td>' + subCategory.name + '</td><td>1200</td><td>8</td><td class="i-status">' + subCategory.status + '</td><td>1/1/2021</td><td>1/1/2021</td><td><button class="info-btn">Info</button><button class="edit-btn">Edit</button><button class="delete-btn">Disable</button></td></tr>');
+                                            //formatStatus();
+                                        },
+                                        error: function(error){
+                                            console.log(error);
+                                        }
+                                    });
+                                });
+                            </script>                 
+                        </div>
+                        <script>
+
+                            $('.category-dashboard-nav .category-type-target').change(function(){
+                                $('.category-dashboard .add-cate').hide();
+                                if(this.value == "category") {
+                                    $('.category-dashboard .template-table').hide();
+                                    $('.category-table').show();
+                                    $('.category-dashboard-nav .add-btn button').html('Add New Category');
+                                }else{
+                                    $('.category-dashboard .template-table').hide();
+                                    $('.sub-category-table').show();
+                                    $('.category-dashboard-nav .add-btn button').html('Add New Sub Category');
+                                }
+                            });
+
+                            $('.category-dashboard-nav .add-btn button').click(function(){
+                                if($(this).html() == "Add New Category") {
+                                    $('.category-dashboard .add-cate').hide();
+                                    $('.category-dashboard .add-category').show();
+                                    $(this).html('Close Adding');
+                                }else if($(this).html() == "Add New Sub Category") {
+                                    $('.category-dashboard .add-cate').hide();
+                                    $('.category-dashboard .add-sub-category').show();
+                                    $(this).html('Close Adding');
+                                }else{
+                                    $('.category-dashboard .add-cate').hide();
+                                    if($('.category-dashboard-nav .category-type-target').val() == "category") $(this).html("Add New Category");
+                                    else $(this).html("Add New Sub Category");
+                                }
+                            });
+
+                        </script>
+                    </div>
+                    <div class="course-dashboard ds-dashboard">
+                        <div class="course-dashboard-nav dash-nav">
+                            <p class="dashboard-headline">Courses Collection</p>
+                            <select class="category-sort-target">
+                                <option value="All">All</option>
+                                {{#each this.categories}}
+                                    {{#each this.subCategories}}
+                                        <option value={{this.name}}>{{this.name}}</option>
+                                    {{/each}}
+                                {{/each}}
+                            </select>
+                            <select class="instructor-sort-target">
+                                <option value="All">All</option>
+                                {{#each this.users}}
+                                    {{#if this.instructor}}
+                                        <option value="{{this.firstName}} {{this.lastName}}">{{this.firstName}} {{this.lastName}}</option>
+                                    {{/if}}
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="course-dashboard-content">
+                            <table class="template-table course-table">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Rating</th>
+                                    <th>Num Student Enroll</th>
+                                    <th>Category Name</th>
+                                    <th>Instructor</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Updated Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                {{#each this.courses}}
+                                    <tr class="course-item">
+                                        <td class="i-id">{{this.id}}</td>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.price}}</td>
+                                        <td>{{this.rating}}</td>
+                                        <td>{{this.numStudentEnroll}}</td>
+                                        <td class="i-sub-name">{{this.categoryLink.subCategory.name}}</td>
+                                        <td class="i-intructor-name">{{this.instructor.basicInfo.firstName}} {{this.instructor.basicInfo.lastName}}</td>
+                                        <td class="i-status">{{this.status}}</td>
+                                        <td>11/1/2021</td>
+                                        <td>11/1/2021</td>
+                                        <td>
+                                            <button class="info-btn">Info</button>
+                                            <button class="edit-btn">Edit</button>
+                                            <button class="delete-btn">Delete</button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </table>    
+                        </div>
+                        <script>
+                            $('.category-sort-target').change(function(){
+                                $('.course-table .course-item').show();
+                                let value = this.value
+                                if(value == "All") return false;
+                                $('.instructor-sort-target').val("All");
+                                $('.course-item').map(function(){
+                                    if($(this).children('.i-sub-name').html() != value) $(this).hide();
+                                });
+                            });
+                            $('.instructor-sort-target').change(function(){
+                                $('.course-table .course-item').show();
+                                let value = this.value;
+                                if(value == "All") return false;
+                                $('.category-sort-target').val("All");
+                                $('.course-item').map(function(){
+                                    console.log($(this).children('.i-intructor-name').html());
+                                    if($(this).children('.i-intructor-name').html() != value) $(this).hide();
+                                });
+                            });
+                        
+                            //formatStatus();
+                        </script>
+                    </div>
+                    <div class="user-dashboard ds-dashboard">
+                        <div class="user-dashboard-nav dash-nav">
+                            <p class="dashboard-headline">Users Collection</p>
+                            <select class="user-type-target">
+                                <option value="All" selected="selected">All</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Student">Student</option>
+                                <option value="Instructor">Instructor</option>
+                            </select>
+                            <div class="add-btn">
+                                <button type="button">Add New User</button>
+                            </div>
+                        </div>
+                        <div class="user-dashboard-content">
+                            <table class="template-table user-table">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>City</th>
+                                    <th>UserName</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Updated Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                {{#each this.users}}
+                                    <tr class="user-item">
+                                        <td class="i-id">{{this.id}}</td>
+                                        <td>{{this.firstName}} {{this.lastName}}</td>
+                                        <td>{{this.email}}</td>
+                                        <td class="i-gender">{{this.gender}}</td>
+                                        <td>{{this.city}}</td>
+                                        <td>{{this.userName}}</td>
+                                        <td class="i-role">{{this.roleId}}</td>
+                                        <td class="i-status">{{this.status}}</td>
+                                        <td>{{this.created_date}}</td>
+                                        <td>{{this.updated_date}}</td>
+                                        <td>
+                                            <button class="info-btn">Info</button>
+                                            <button class="edit-btn">Edit</button>
+                                            <button class="delete-btn">Delete</button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </table>                 
+                        </div>
+                        <script>
+                            function formatRole(){
+                                $('.user-table .i-role').map(function(){
+                                    if($(this).html() == 2) $(this).html('Student');
+                                    if($(this).html() == 3) $(this).html('Instructor');
+                                    if($(this).html() == 4) $(this).html("Admin");
+                                })
+                            }
+                            function formatGender(){
+                                $('.user-table .i-gender').map(function(){
+                                    if($(this).html() == 1) $(this).html('Male');
+                                    if($(this).html() == 0) $(this).html('Female');
+                                })
+                            }
+                            formatRole();
+                            formatGender();
+
+                            $('.user-type-target').change(function(){
+                                $('.user-table .user-item').show();
+                                if(this.value == 'Student') {
+                                    $('.user-table .user-item').map(function(){
+                                        if($(this).children('.i-role').html() !== 'Student') $(this).hide();
+                                    });
+                                }
+                                else if(this.value == 'Instructor') {
+                                    $('.user-table .user-item').map(function(){
+                                        if($(this).children('.i-role').html() !== 'Instructor') $(this).hide();
+                                    });
+                                }
+                                else if(this.value == 'Admin') {
+                                    $('.user-table .user-item').map(function(){
+                                        if($(this).children('.i-role').html() !== 'Admin') $(this).hide();
+                                    });
+                                }
+                            });
+
+                        </script>
+                    </div>
+                    <script>
+                    </script>
+                </div>
+                <div class="module-detail">
+                    <div class="category-detail dt-dashboard">
+                        <p class="dashboard-headline" style="padding-bottom: 20px;"></p>
+                        <div class="category-detail-content dt-content">
+                            <div class="category-block dt-block">
+                                <div class="dt-item">
+                                    <img class="d-img" src="" alt="">
+                                </div>
+                                <div class="dt-item">
+                                    <p>Id</p>
+                                    <p class="d-id"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Name</p>
+                                    <p class="d-name"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Logo</p>
+                                    <p class="d-logo"><i></i><span style="margin-left: 10px; padding: 10px 0px;"></span></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Status</p>
+                                    <p class="d-status"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Created Date</p>
+                                    <p class="d-created-date"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Updated Date</p>
+                                    <p class="d-updated-date"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <button class="edit-btn">Edit this category</button>
+                                </div>
+                                <div class="dt-item">
+                                    <button class="delete-btn" idx='0'>Disable this category</button>
+                                </div>
+                            </div>
+                            <div class="sub-category-block">
+                                <table class="template-table sub-category-table">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Sub Category Name</th>
+                                        <th>Number of Courses</th>
+                                        <th>Created Date</th>
+                                        <th>Updated Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </table>             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-detail dt-dashboard">
+                        <p class="dashboard-headline" style="padding-bottom: 20px;"></p>
+                        <div class="course-detail-content dt-content">
+                            <div class="course-block dt-block">
+                                <div class="dt-item">
+                                    <img class="d-image" src="" alt="">
+                                </div>
+                                <div class="dt-item">
+                                    <p>Id</p>
+                                    <p class="d-id"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Name</p>
+                                    <p class="d-name"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Headline</p>
+                                    <p class="d-headline"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Concurrency</p>
+                                    <p class="d-concurrency"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Price</p>
+                                    <p class="d-price"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Discout</p>
+                                    <p class="d-discount"></p>
+                                </div>
+                            </div>
+                            <div class="course-block dt-block">
+                                <div class="dt-item">
+                                    <p>Language</p>
+                                    <p class="d-language"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Rating</p>
+                                    <p class="d-rating"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Pre Price</p>
+                                    <p class="d-pre-price"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Level</p>
+                                    <p class="d-level"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Advancement</p>
+                                    <p class="d-advancement"></p>
+                                </div>
+                                 <div class="dt-item">
+                                    <p>Num Review</p>
+                                    <p class="d-num-review"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Estimate Content Length</p>
+                                    <p class="d-estimate-content-length"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Number Student Enroll</p>
+                                    <p class="d-num-student-enroll"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Category Name</p>
+                                    <p class="d-category-name"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Instructor Name</p>
+                                    <p class="d-instructor-name"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Num Student Enroll</p>
+                                    <p class="d-num-student-enroll"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Created Date</p>
+                                    <p class="d-created-date">11/1/2021</p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Updated Date</p>
+                                    <p class="d-updated-date">11/1/2021</p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Status</p>
+                                    <p class="d-status"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <button class="delete-btn">Disable this course</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-detail dt-dashboard">
+                        <p class="dashboard-headline" style="padding-bottom: 20px;"></p>
+                        <div class="user-detail-content dt-content">
+                            <div class="user-block dt-block">
+                                <div class="dt-item">
+                                    <img class="d-image" src="" alt="">
+                                </div>
+                                <div class="dt-item">
+                                    <p>Id</p>
+                                    <p class="d-id"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>FirstName</p>
+                                    <p class="d-first-name"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Last Name</p>
+                                    <p class="d-last-name"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Email</p>
+                                    <p class="d-email"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Job</p>
+                                    <p class="d-job"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Info</p>
+                                    <p class="d-info"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Gender</p>
+                                    <p class="d-gender"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>User Name</p>
+                                    <p class="d-username"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>BirthDay</p>
+                                    <p class="d-birthday">21/5/1987</p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Address Street</p>
+                                    <p class="d-street"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>District</p>
+                                    <p class="d-district"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>City</p>
+                                    <p class="d-city"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Country</p>
+                                    <p class="d-country"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Role</p>
+                                    <p class="d-role"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Status</p>
+                                    <p class="d-status"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Created Date</p>
+                                    <p class="d-created-date">11/1/2021</p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Updated Date</p>
+                                    <p class="d-updated-date">11/1/2021</p>
+                                </div>
+                                <div class="dt-item">
+                                    <button class="edit-btn">Edit this user</button>
+                                </div>
+                                <div class="dt-item">
+                                    <button class="delete-btn">Disable this user</button>
+                                </div>
+                                <div class="dt-item">
+                                    <button class="update-btn">Become Instructor</button>
+                                </div>
+                            </div>
+                            <div class="instructor-block dt-block" style="display: none;">
+                                <div class="dt-item">
+                                    <p>Rating</p>
+                                    <p class="d-rating"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Num Review</p>
+                                    <p class="d-num-review"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Short Description</p>
+                                    <p class="d-short-description"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Descrtion</p>
+                                    <p class="d-description"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Num Student Enroll</p>
+                                    <p class="d-num-student-enroll"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Num Courses</p>
+                                    <p class="d-num-course"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Contact Url</p>
+                                    <p class="d-contact-urk"></p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Created Date</p>
+                                    <p class="d-created-date">11/1/2021</p>
+                                </div>
+                                <div class="dt-item">
+                                    <p>Updated Date</p>
+                                    <p class="d-updated-date">11/1/2021</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $('.category-dashboard .category-table .info-btn').click(function(){
+                        $('.ds-dashboard').hide();
+                        $('.dt-dashboard').hide();
+                        $('.category-detail').show();
+                        $.ajax({
+                            type: "POST",
+                            url: '/admin/look-up/category',
+                            dataType: 'json',
+                            data: {
+                                categoryId: $(this).parent().parent().children('.i-id').html()
+                            },
+                            success: function (category) {
+                                $('.category-detail .dashboard-headline:first').html(category.name);
+                                $('.category-block .d-id').html(category.id);
+                                $('.category-block .d-name').html(category.name);
+                                $('.category-block .d-img').attr('src','../' + category.image);
+                                if(category.status == 0) {
+                                    $('.category-block .d-status').html("Disable");
+                                    $('.category-block .category-block .delete-btn').html('Enable this category');
+                                } 
+                                else $('.d-status').html("Enable");
+                                $('.category-block .d-logo').children('i').addClass(category.logo).next().html(category.logo);
+                                $('.category-block .d-created-date').html('1/1/2021');
+                                $('.category-block .d-updated-date').html('1/1/2021');
+                                console.log(category.subCategories);
+                                for(let i = 0; i < category.subCategories.length; i++){
+                                    $('.sub-category-block .sub-category-table').append('<tr class="main-category-item"><td>' + category.subCategories[i].id + '</td><td class="d-name">' + category.subCategories[i].name + '</td><td>1200</td><td>1/1/2021</td><td>1/1/2021</td><td><button class="edit-btn">Edit</button><button class="delete-btn">Delete</button></td></tr>');
+                                }
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    });
+
+                    $('.user-dashboard .user-table .info-btn').click(function(){
+                        $('.ds-dashboard').hide();
+                        $('.dt-dashboard').hide();
+                        $('.user-detail').show();
+                        $.ajax({
+                            type: "POST",
+                            url: '/admin/look-up/user',
+                            dataType: 'json',
+                            data: {
+                                userId: $(this).parent().parent().children('.i-id').html()
+                            },
+                            success: function (user) {
+                                $('.user-detail .dashboard-headline:first').html(user.firstName + " " + user.lastName);
+                                $('.user-block .d-id').html(user.id);
+                                $('.user-block .d-image').attr('src','../' + user.image);
+                                $('.user-block .d-first-name').html(user.firstName);
+                                $('.user-block .d-last-name').html(user.lastName);
+                                $('.user-block .d-email').html(user.email);
+                                $('.user-block .d-job').html(user.job);
+                                $('.user-block .d-info').html(user.info);
+                                if(user.gender == 0) $('.user-block .d-gender').html("Female");
+                                else $('.user-block .d-gender').html("Male");
+                                $('.user-block .d-username').html(user.username);
+                                $('.user-block .d-birthday').html(user.birthDay);
+                                $('.user-block .d-street').html(user.addressStreet);
+                                $('.user-block .d-district').html(user.district);
+                                $('.user-block .d-city').html(user.city);
+                                $('.user-block .d-country').html(user.country);
+                                $('.user-block .d-id').html(user.id);
+                                if(user.status == 0) {
+                                    $('.user-block .d-status').html("Disable");
+                                    $('.user-block .delete-btn').html('Enable this user');
+                                } else $('.user-block .d-status').html("Enable");
+                                if(user.roleId == 2) $('.user-block .d-role').html("Student");
+                                else if(user.roleId == 3) $('.user-block .d-role').html("Instructor");
+                                else if(user.roleId == 4) $('.user-block .d-role').html("Admin");
+                                if(user.instructor) {
+                                    $('.instructor-block').show();
+                                    $('.user-block .update-btn').css('display','none');
+                                    $('.instructor-block .d-rating').html(user.instructor.rating);
+                                    $('.instructor-block .d-num-review').html(user.instructor.numReview);
+                                    $('.instructor-block .d-short-description').html(user.instructor.shortDescription);
+                                    $('.instructor-block .d-description').html(user.instructor.description);
+                                    $('.instructor-block .d-num-student-enroll').html(user.instructor.numStudentEnroll);
+                                    $('.instructor-block .d-num-course').html(user.instructor.numCourse);
+                                    $('.instructor-block .d-contact-url').html(user.instructor.contactUrl);
+                                }
+                            },  
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    });
+
+                    $('.course-dashboard .course-table .info-btn').click(function(){
+                        $('.ds-dashboard').hide();
+                        $('.dt-dashboard').hide();
+                        $('.course-detail').show();
+                        $.ajax({
+                            type: "POST",
+                            url: '/admin/look-up/course',
+                            dataType: 'json',
+                            data: {
+                                courseId: $(this).parent().parent().children('.i-id').html()
+                            },
+                            success: function (course) {
+                                if(course.status == 1) $('.course-block .d-status').html("Enabled");
+                                else {
+                                    $('.course-block .d-status').html("Disabled");
+                                     $('.course-block .delete-btn').html("Enable this course");
+                                }
+                                $('.course-detail .dashboard-headline:first').html(course.name);
+                                $('.course-block .d-id').html(course.id);
+                                $('.course-block .d-image').attr('src','../' + course.image);
+                                $('.course-block .d-name').html(course.name);
+                                $('.course-block .d-headline').html(course.headline);
+                                $('.course-block .d-concurrency').html(course.concurrency);
+                                $('.course-block .d-price').html(course.price);
+                                $('.course-block .d-discount').html(course.discount);
+                                $('.course-block .d-language').html(course.language);
+                                $('.course-block .d-username').html(course.username);
+                                $('.course-block .d-rating').html(course.rating);
+                                $('.course-block .d-num-review').html(course.numReview);
+                                $('.course-block .d-num-lecture').html(course.numLecture);
+                                $('.course-block .d-estimate-content-length').html(course.estimateContentLength);
+                                $('.course-block .d-num-student-enroll').html(course.numStudentEnroll);
+                                $('.course-block .d-category-name').html(course.categoryLink.subCategory.name);
+                                $('.course-block .d-instructor-name').html(course.instructor.basicInfo.firstName + " " + course.instructor.basicInfo.lastName);
+                                $('.course-block .d-pre-price').html(course.prePrice);
+                                $('.course-block .d-level').html(course.level.description);
+                                $('.course-block .d-advancement').html(course.advancement.description);
+                            },  
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    formatStatus();
+                    $('.module-item').map(function(index){
+                        $(this).click(function(){
+                            $('.ds-dashboard').hide();
+                            $('.dt-dashboard').hide();
+                            $('.ds-dashboard').eq(index).show();
+                        })
+                    });
+
+                    $('.category-block .edit-btn').click(function(){
+                        if($(this).html() == 'Edit this category'){
+                            $('.category-block .d-name').attr('contenteditable','true').focus();
+                            $('.category-block .d-logo').children('i').next().attr('contenteditable','true');
+                            $(this).html('Accept Edit (Only name, logo and status)');
+                        }else{
+                            $.ajax({
+                                type: "POST",
+                                url: '/admin/update/category',
+                                dataType: 'json',
+                                data: {
+                                    categoryId: $('.category-block .d-id').html(),
+                                    name: $('.category-block .d-name').html(),
+                                    logo: $('.category-block  .d-logo').children('i').next().html(),
+                                },
+                                success: function (category) {
+                                    setNotification('Edit Category', 'Update Category Information Successfully','notification-success', type = 2);
+                                    $('.category-block .d-name').html(category.name);
+                                    $('.category-block .d-logo').children('i').addClass(category.logo).next().html(category.logo);
+                                    $('.category-block .edit-btn').html('Edit this category');
+                                    $('.category-block p').attr('contenteditable','false');
+                                    $('.category-block span').attr('contenteditable','false');
+                                },
+                                error: function(error){
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    });
+
+                    $('.user-block .update-btn').click(function(){
+                        setNotification('Update User', 'Are you sure want to make this user to become instructor','notification-danger', type = 1);
+                        if($('.accept-btn').click(function(e){
+                            $.ajax({
+                                type: "POST",
+                                url: '/admin/change-role/user',
+                                dataType: 'json',
+                                data: {
+                                    userId: $('.user-block .d-id').html(),
+                                    roleId: 3
+                                },
+                                success: function (user) {
+                                    setNotification('Update User', 'Change this user to Instructor role successfully','notification-success', type = 2);
+                                    $('.user-block .d-role').html("Instructor");
+                                },
+                                error: function(error){
+                                    console.log(error);
+                                }
+                            });
+                        }));;
+                    });
+
+                    $('.category-block .delete-btn').click(function(e){
+                        if($(this).text() == "Disable this category"){
+                            setNotification('Disable Category', 'Are you sure want to disable this category','notification-danger', type = 1);
+                            if($('.accept-btn').click(function(e){
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/change-status/category',
+                                    dataType: 'json',
+                                    data: {
+                                        categoryId: $('.category-block .d-id').html(),
+                                        status: 0
+                                    },
+                                    success: function (data) { 
+                                        if(data.code == '01'){
+                                            setNotification('Disable Category', 'This category has already contains courses, so it can not be disabled','notification-info', type = 2);
+                                        }
+                                        else{
+                                            setNotification('Disable Category', 'Disable this category successfully','notification-success', type = 2);
+                                            $('.category-block .d-status').html("Disabled");  
+                                            $('.category-block .delete-btn').html('Enable this category'); 
+                                            console.log("ok");
+                                        }
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                    }
+                                });
+                            }));
+                        }else{
+                            setNotification('Enable Category', 'Are you sure want to enable this category','notification-danger', type = 1);
+                            if($('.accept-btn').click(function(e){
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/change-status/category',
+                                    dataType: 'json',
+                                    data: {
+                                        categoryId: $('.category-block .d-id').html(),
+                                        status: 1
+                                    },
+                                    success: function (data) { 
+                                        setNotification('Enable Category', 'Enable this category successfully','notification-success', type = 2);
+                                        $('.d-status').html("Enabled");       
+                                        $('.category-block .delete-btn').html('Disable this category');     
+                                        console.log("ok1");
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                    }
+                                });
+                            }));
+                        }
+                    });
+                
+                    $('.course-block .delete-btn').click(function(){
+                        if($(this).html() == "Disable this course"){
+                            setNotification('Disable Course', 'Are you sure want to disable this course','notification-danger', type = 1);
+                            if($('.accept-btn').click(function(e){
+                                console.log($('.course-block .d-id').html())
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/change-status/course',
+                                    dataType: 'json',
+                                    data: {
+                                        courseId: $('.course-block .d-id').html(),
+                                        status: '0'
+                                    },
+                                    success: function (data) { 
+                                        setNotification('Disable Course', 'Disable this course successfully','notification-success', type = 2);
+                                        $('.course-block .d-status').html("Disabled");
+                                        $('.course-block .delete-btn').html("Enable this course");
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                    }
+                                });
+                            }));
+                        }else{
+                            setNotification('Enable Course', 'Are you sure want to enable this course','notification-danger', type = 1);
+                            if($('.accept-btn').click(function(e){
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/change-status/course',
+                                    dataType: 'json',
+                                    data: {
+                                        courseId: $('.course-block .d-id').html(),
+                                        status: '1'
+                                    },
+                                    success: function (data) { 
+                                        setNotification('Enable Course', 'Enable this course successfully','notification-success', type = 2);
+                                        $('.course-block .d-status').html("Enabled");    
+                                        $('.course-block .delete-btn').html("Disable this course");        
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                    }
+                                });
+                            }));
+                        }
+                    });
+
+                    $('.user-block .delete-btn').click(function(){
+                        if($(this).html() == "Disable this user"){
+                            setNotification('Disable User', 'Are you sure want to disable this user','notification-danger', type = 1);
+                            if($('.accept-btn').click(function(e){
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/change-status/user',
+                                    dataType: 'json',
+                                    data: {
+                                        userId: $('.user-block .d-id').html(),
+                                        status: 0
+                                    },
+                                    success: function (data) { 
+                                        setNotification('Disable User', 'Disable this user successfully','notification-success', type = 2);
+                                        $('.user-block .d-status').html("Disabled");
+                                        $('.user-block .delete-btn').html("Enable this user");
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                    }
+                                });
+                            }));
+                        }else{
+                            setNotification('Enable User', 'Are you sure want to enable this user','notification-danger', type = 1);
+                            if($('.accept-btn').click(function(e){
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/change-status/user',
+                                    dataType: 'json',
+                                    data: {
+                                        userId: $('.user-block .d-id').html(),
+                                        status: 1
+                                    },
+                                    success: function (data) { 
+                                        setNotification('Enable Course', 'Enable this user successfully','notification-success', type = 2);
+                                        $('.user-block .d-status').html("Enabled");    
+                                        $('.user-block .delete-btn').html("Disable this user");        
+                                    },
+                                    error: function(error){
+                                        console.log(error);
+                                    }
+                                });
+                            }));
+                        }
+                    });
+                });
+            </script>
+        </div>
+
+    {{/unless}}
+    </div>
+</section>

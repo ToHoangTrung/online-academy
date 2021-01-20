@@ -1,0 +1,173 @@
+.cart {
+  flex: 1;
+  position: relative;
+  width: 80%;
+  margin: 20px auto; }
+  .cart a {
+    display: block;
+    color: black;
+    text-decoration: none; }
+  .cart button {
+    outline: none;
+    border: none;
+    cursor: pointer; }
+  .cart .cart-headline {
+    margin-top: -20px;
+    grid-column: 1 / 3;
+    font-size: 30px;
+    background-color: #48515C;
+    width: 100vw;
+    margin-left: -10vw;
+    padding: 40px 13.5% 40px 12.5%;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20px; }
+  .cart .empty-cart .cart-headline {
+    margin-bottom: 0px; }
+  .cart .empty-cart .empty-cart-content {
+    width: 50%;
+    margin: 0px auto; }
+    .cart .empty-cart .empty-cart-content .info {
+      margin: 40px auto; }
+      .cart .empty-cart .empty-cart-content .info p {
+        text-align: center;
+        font-size: 25px; }
+        .cart .empty-cart .empty-cart-content .info p:last-child {
+          font-size: 25px; }
+      .cart .empty-cart .empty-cart-content .info button {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: white;
+        pointer-events: none;
+        position: relative;
+        margin-bottom: 20px; }
+        .cart .empty-cart .empty-cart-content .info button i {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 70px;
+          color: #CCCCCC; }
+    .cart .empty-cart .empty-cart-content button {
+      background-color: #EC5252;
+      color: white;
+      display: block;
+      margin: 40px auto;
+      width: 50%;
+      padding: 15px;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 5px; }
+      .cart .empty-cart .empty-cart-content button:hover {
+        filter: brightness(110%); }
+  .cart .cart-content {
+    display: grid;
+    grid-template-columns: 68% 30%;
+    justify-content: space-between;
+    align-items: flex-start; }
+    .cart .cart-content .course-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-left: 0px auto; }
+      .cart .cart-content .course-list .course-list-item {
+        display: grid;
+        grid-template-columns: 20% 40% 20% 20%;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 15px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        background-color: #FFFFFF;
+        cursor: pointer; }
+        .cart .cart-content .course-list .course-list-item img {
+          height: 80px;
+          width: 90%; }
+        .cart .cart-content .course-list .course-list-item div p:first-child {
+          padding-bottom: 10px;
+          font-weight: bold; }
+        .cart .cart-content .course-list .course-list-item div p:last-child {
+          color: gray;
+          font-size: 15px; }
+        .cart .cart-content .course-list .course-list-item .price p {
+          text-align: center; }
+          .cart .cart-content .course-list .course-list-item .price p:first-child {
+            color: #DF322F;
+            font-size: 20px; }
+          .cart .cart-content .course-list .course-list-item .price p:last-child {
+            text-decoration: line-through; }
+        .cart .cart-content .course-list .course-list-item button {
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          justify-self: end;
+          background-color: transparent; }
+          .cart .cart-content .course-list .course-list-item button i {
+            color: grey;
+            font-size: 17px; }
+          .cart .cart-content .course-list .course-list-item button:hover {
+            background-color: #EEF1F2; }
+    .cart .cart-content .price-summary {
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      padding: 20px; }
+      .cart .cart-content .price-summary .summary-price .cart-info {
+        font-size: 25px;
+        font-weight: bold;
+        color: #464646; }
+      .cart .cart-content .price-summary .summary-price .price {
+        margin: 10px auto; }
+        .cart .cart-content .price-summary .summary-price .price p {
+          display: flex;
+          justify-content: space-between;
+          font-size: 17px;
+          padding: 10px 0px; }
+          .cart .cart-content .price-summary .summary-price .price p:first-child span:first-child, .cart .cart-content .price-summary .summary-price .price p:nth-child(2) span:first-child {
+            color: grey; }
+          .cart .cart-content .price-summary .summary-price .price p:last-child span:first-child {
+            font-weight: bold; }
+          .cart .cart-content .price-summary .summary-price .price p:last-child span:last-child {
+            color: #DF322F; }
+      .cart .cart-content .price-summary .coupon-select .coupon-text {
+        cursor: pointer;
+        text-align: right;
+        color: #0086D2;
+        padding-bottom: 10px; }
+      .cart .cart-content .price-summary .coupon-select form {
+        display: flex; }
+        .cart .cart-content .price-summary .coupon-select form input {
+          padding: 8px;
+          flex-basis: 70%;
+          border: 1px solid grey; }
+        .cart .cart-content .price-summary .coupon-select form button {
+          flex-basis: 30%;
+          background-color: #FFFFFF;
+          padding: 8px;
+          border: 1px solid grey;
+          border-left: none;
+          font-weight: bold;
+          font-size: 14px; }
+      .cart .cart-content .price-summary .coupon-select .notification {
+        padding-top: 10px;
+        color: #F26C4F; }
+      .cart .cart-content .price-summary .to-payment-btn {
+        background-color: #F26C4F;
+        color: white;
+        display: block;
+        margin: 20px auto;
+        width: 100%;
+        padding: 15px;
+        font-size: 17px;
+        font-weight: bold;
+        border-radius: 5px; }
+        .cart .cart-content .price-summary .to-payment-btn:hover {
+          filter: brightness(110%); }
+      .cart .cart-content .price-summary .promotion {
+        display: flex;
+        flex-direction: column; }
+        .cart .cart-content .price-summary .promotion p {
+          padding: 10px 0px; }
+          .cart .cart-content .price-summary .promotion p i {
+            margin-right: 10px;
+            width: 20px; }
